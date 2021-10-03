@@ -16,6 +16,7 @@ class CreateUserRequest extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName', protoName: 'userName')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bio')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceToken', protoName: 'deviceToken')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profilePictureUrl', protoName: 'profilePictureUrl')
     ..hasRequiredFields = false
   ;
 
@@ -24,6 +25,7 @@ class CreateUserRequest extends $pb.GeneratedMessage {
     $core.String? userName,
     $core.String? bio,
     $core.String? deviceToken,
+    $core.String? profilePictureUrl,
   }) {
     final _result = create();
     if (userName != null) {
@@ -34,6 +36,9 @@ class CreateUserRequest extends $pb.GeneratedMessage {
     }
     if (deviceToken != null) {
       _result.deviceToken = deviceToken;
+    }
+    if (profilePictureUrl != null) {
+      _result.profilePictureUrl = profilePictureUrl;
     }
     return _result;
   }
@@ -84,6 +89,15 @@ class CreateUserRequest extends $pb.GeneratedMessage {
   $core.bool hasDeviceToken() => $_has(2);
   @$pb.TagNumber(3)
   void clearDeviceToken() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get profilePictureUrl => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set profilePictureUrl($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasProfilePictureUrl() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearProfilePictureUrl() => clearField(4);
 }
 
 class CreateUserResponse extends $pb.GeneratedMessage {
@@ -138,6 +152,7 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName', protoName: 'userName')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bio')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceToken', protoName: 'deviceToken')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profilePictureUrl', protoName: 'profilePictureUrl')
     ..hasRequiredFields = false
   ;
 
@@ -146,6 +161,7 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
     $core.String? userName,
     $core.String? bio,
     $core.String? deviceToken,
+    $core.String? profilePictureUrl,
   }) {
     final _result = create();
     if (userName != null) {
@@ -156,6 +172,9 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
     }
     if (deviceToken != null) {
       _result.deviceToken = deviceToken;
+    }
+    if (profilePictureUrl != null) {
+      _result.profilePictureUrl = profilePictureUrl;
     }
     return _result;
   }
@@ -206,6 +225,15 @@ class UpdateUserRequest extends $pb.GeneratedMessage {
   $core.bool hasDeviceToken() => $_has(2);
   @$pb.TagNumber(3)
   void clearDeviceToken() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get profilePictureUrl => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set profilePictureUrl($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasProfilePictureUrl() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearProfilePictureUrl() => clearField(4);
 }
 
 class UpdateUserResponse extends $pb.GeneratedMessage {
@@ -450,6 +478,7 @@ class AwayUser extends $pb.GeneratedMessage {
     ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'verified')
     ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subscriptionStatus', protoName: 'subscriptionStatus')
     ..aOM<$1.Timestamp>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $1.Timestamp.create)
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profilePictureUrl', protoName: 'profilePictureUrl')
     ..hasRequiredFields = false
   ;
 
@@ -463,6 +492,7 @@ class AwayUser extends $pb.GeneratedMessage {
     $core.bool? verified,
     $core.String? subscriptionStatus,
     $1.Timestamp? createdAt,
+    $core.String? profilePictureUrl,
   }) {
     final _result = create();
     if (id != null) {
@@ -488,6 +518,9 @@ class AwayUser extends $pb.GeneratedMessage {
     }
     if (createdAt != null) {
       _result.createdAt = createdAt;
+    }
+    if (profilePictureUrl != null) {
+      _result.profilePictureUrl = profilePictureUrl;
     }
     return _result;
   }
@@ -585,6 +618,15 @@ class AwayUser extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(8);
   @$pb.TagNumber(8)
   $1.Timestamp ensureCreatedAt() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  $core.String get profilePictureUrl => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set profilePictureUrl($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasProfilePictureUrl() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearProfilePictureUrl() => clearField(9);
 }
 
 class MinimalUserInfo extends $pb.GeneratedMessage {
@@ -594,6 +636,7 @@ class MinimalUserInfo extends $pb.GeneratedMessage {
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bio')
     ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'verified')
     ..aOM<$1.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $1.Timestamp.create)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profilePictureUrl', protoName: 'profilePictureUrl')
     ..hasRequiredFields = false
   ;
 
@@ -604,6 +647,7 @@ class MinimalUserInfo extends $pb.GeneratedMessage {
     $core.String? bio,
     $core.bool? verified,
     $1.Timestamp? createdAt,
+    $core.String? profilePictureUrl,
   }) {
     final _result = create();
     if (id != null) {
@@ -620,6 +664,9 @@ class MinimalUserInfo extends $pb.GeneratedMessage {
     }
     if (createdAt != null) {
       _result.createdAt = createdAt;
+    }
+    if (profilePictureUrl != null) {
+      _result.profilePictureUrl = profilePictureUrl;
     }
     return _result;
   }
@@ -690,5 +737,14 @@ class MinimalUserInfo extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(5);
   @$pb.TagNumber(5)
   $1.Timestamp ensureCreatedAt() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $core.String get profilePictureUrl => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set profilePictureUrl($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasProfilePictureUrl() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearProfilePictureUrl() => clearField(6);
 }
 

@@ -31,11 +31,12 @@ class AuthCubit extends Cubit<AuthState> {
         // User does not exist; Register
         final fbUser = getIt<UserRepository>().firebaseUser!;
         String username = fbUser.displayName!;
+        String profilePictureUrl = fbUser.photoURL ?? "";
 
         final registrationResult = await getIt<UserRepository>().createUser(
             username,
             "I am using Away",
-            await FirebaseNotificationHandler.getDeviceToken());
+            await FirebaseNotificationHandler.getDeviceToken(),profilePictureUrl);
 
         registrationResult.fold(
           (l) {

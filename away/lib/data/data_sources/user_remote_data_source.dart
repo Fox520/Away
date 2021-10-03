@@ -46,6 +46,7 @@ class UserRemoteDataSource {
     String username,
     String bio,
     String deviceToken,
+    String profilePictureUrl,
   ) async {
     try {
       await client.createUser(
@@ -53,6 +54,7 @@ class UserRemoteDataSource {
           userName: username,
           bio: bio,
           deviceToken: deviceToken,
+          profilePictureUrl: profilePictureUrl,
         ),
         options:
             CallOptions(metadata: {"token": await firebaseUser!.getIdToken()}),

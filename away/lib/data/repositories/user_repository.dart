@@ -17,8 +17,9 @@ class UserRepository {
     String username,
     String bio,
     String deviceToken,
+    String profilePictureUrl
   ) {
-    return remoteDataSource.createUser(username, bio, deviceToken);
+    return remoteDataSource.createUser(username, bio, deviceToken, profilePictureUrl);
   }
 
   Future<Either<Failure, bool>> googleSignIn() {

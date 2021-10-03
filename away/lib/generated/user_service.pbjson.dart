@@ -15,11 +15,12 @@ const CreateUserRequest$json = const {
     const {'1': 'userName', '3': 1, '4': 1, '5': 9, '10': 'userName'},
     const {'1': 'bio', '3': 2, '4': 1, '5': 9, '10': 'bio'},
     const {'1': 'deviceToken', '3': 3, '4': 1, '5': 9, '10': 'deviceToken'},
+    const {'1': 'profilePictureUrl', '3': 4, '4': 1, '5': 9, '10': 'profilePictureUrl'},
   ],
 };
 
 /// Descriptor for `CreateUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List createUserRequestDescriptor = $convert.base64Decode('ChFDcmVhdGVVc2VyUmVxdWVzdBIaCgh1c2VyTmFtZRgBIAEoCVIIdXNlck5hbWUSEAoDYmlvGAIgASgJUgNiaW8SIAoLZGV2aWNlVG9rZW4YAyABKAlSC2RldmljZVRva2Vu');
+final $typed_data.Uint8List createUserRequestDescriptor = $convert.base64Decode('ChFDcmVhdGVVc2VyUmVxdWVzdBIaCgh1c2VyTmFtZRgBIAEoCVIIdXNlck5hbWUSEAoDYmlvGAIgASgJUgNiaW8SIAoLZGV2aWNlVG9rZW4YAyABKAlSC2RldmljZVRva2VuEiwKEXByb2ZpbGVQaWN0dXJlVXJsGAQgASgJUhFwcm9maWxlUGljdHVyZVVybA==');
 @$core.Deprecated('Use createUserResponseDescriptor instead')
 const CreateUserResponse$json = const {
   '1': 'CreateUserResponse',
@@ -37,11 +38,12 @@ const UpdateUserRequest$json = const {
     const {'1': 'userName', '3': 1, '4': 1, '5': 9, '10': 'userName'},
     const {'1': 'bio', '3': 2, '4': 1, '5': 9, '10': 'bio'},
     const {'1': 'deviceToken', '3': 3, '4': 1, '5': 9, '10': 'deviceToken'},
+    const {'1': 'profilePictureUrl', '3': 4, '4': 1, '5': 9, '10': 'profilePictureUrl'},
   ],
 };
 
 /// Descriptor for `UpdateUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateUserRequestDescriptor = $convert.base64Decode('ChFVcGRhdGVVc2VyUmVxdWVzdBIaCgh1c2VyTmFtZRgBIAEoCVIIdXNlck5hbWUSEAoDYmlvGAIgASgJUgNiaW8SIAoLZGV2aWNlVG9rZW4YAyABKAlSC2RldmljZVRva2Vu');
+final $typed_data.Uint8List updateUserRequestDescriptor = $convert.base64Decode('ChFVcGRhdGVVc2VyUmVxdWVzdBIaCgh1c2VyTmFtZRgBIAEoCVIIdXNlck5hbWUSEAoDYmlvGAIgASgJUgNiaW8SIAoLZGV2aWNlVG9rZW4YAyABKAlSC2RldmljZVRva2VuEiwKEXByb2ZpbGVQaWN0dXJlVXJsGAQgASgJUhFwcm9maWxlUGljdHVyZVVybA==');
 @$core.Deprecated('Use updateUserResponseDescriptor instead')
 const UpdateUserResponse$json = const {
   '1': 'UpdateUserResponse',
@@ -102,11 +104,12 @@ const AwayUser$json = const {
     const {'1': 'verified', '3': 6, '4': 1, '5': 8, '10': 'verified'},
     const {'1': 'subscriptionStatus', '3': 7, '4': 1, '5': 9, '10': 'subscriptionStatus'},
     const {'1': 'createdAt', '3': 8, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
+    const {'1': 'profilePictureUrl', '3': 9, '4': 1, '5': 9, '10': 'profilePictureUrl'},
   ],
 };
 
 /// Descriptor for `AwayUser`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List awayUserDescriptor = $convert.base64Decode('CghBd2F5VXNlchIOCgJpZBgBIAEoCVICaWQSGgoIdXNlck5hbWUYAiABKAlSCHVzZXJOYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBIQCgNiaW8YBCABKAlSA2JpbxIgCgtkZXZpY2VUb2tlbhgFIAEoCVILZGV2aWNlVG9rZW4SGgoIdmVyaWZpZWQYBiABKAhSCHZlcmlmaWVkEi4KEnN1YnNjcmlwdGlvblN0YXR1cxgHIAEoCVISc3Vic2NyaXB0aW9uU3RhdHVzEjgKCWNyZWF0ZWRBdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCWNyZWF0ZWRBdA==');
+final $typed_data.Uint8List awayUserDescriptor = $convert.base64Decode('CghBd2F5VXNlchIOCgJpZBgBIAEoCVICaWQSGgoIdXNlck5hbWUYAiABKAlSCHVzZXJOYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBIQCgNiaW8YBCABKAlSA2JpbxIgCgtkZXZpY2VUb2tlbhgFIAEoCVILZGV2aWNlVG9rZW4SGgoIdmVyaWZpZWQYBiABKAhSCHZlcmlmaWVkEi4KEnN1YnNjcmlwdGlvblN0YXR1cxgHIAEoCVISc3Vic2NyaXB0aW9uU3RhdHVzEjgKCWNyZWF0ZWRBdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCWNyZWF0ZWRBdBIsChFwcm9maWxlUGljdHVyZVVybBgJIAEoCVIRcHJvZmlsZVBpY3R1cmVVcmw=');
 @$core.Deprecated('Use minimalUserInfoDescriptor instead')
 const MinimalUserInfo$json = const {
   '1': 'MinimalUserInfo',
@@ -116,8 +119,9 @@ const MinimalUserInfo$json = const {
     const {'1': 'bio', '3': 3, '4': 1, '5': 9, '10': 'bio'},
     const {'1': 'verified', '3': 4, '4': 1, '5': 8, '10': 'verified'},
     const {'1': 'createdAt', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
+    const {'1': 'profilePictureUrl', '3': 6, '4': 1, '5': 9, '10': 'profilePictureUrl'},
   ],
 };
 
 /// Descriptor for `MinimalUserInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List minimalUserInfoDescriptor = $convert.base64Decode('Cg9NaW5pbWFsVXNlckluZm8SDgoCaWQYASABKAlSAmlkEhoKCHVzZXJOYW1lGAIgASgJUgh1c2VyTmFtZRIQCgNiaW8YAyABKAlSA2JpbxIaCgh2ZXJpZmllZBgEIAEoCFIIdmVyaWZpZWQSOAoJY3JlYXRlZEF0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0');
+final $typed_data.Uint8List minimalUserInfoDescriptor = $convert.base64Decode('Cg9NaW5pbWFsVXNlckluZm8SDgoCaWQYASABKAlSAmlkEhoKCHVzZXJOYW1lGAIgASgJUgh1c2VyTmFtZRIQCgNiaW8YAyABKAlSA2JpbxIaCgh2ZXJpZmllZBgEIAEoCFIIdmVyaWZpZWQSOAoJY3JlYXRlZEF0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EiwKEXByb2ZpbGVQaWN0dXJlVXJsGAYgASgJUhFwcm9maWxlUGljdHVyZVVybA==');

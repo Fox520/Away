@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
-      color: Color(0xFF1B2330),
+      color: Colors.white,
+      brightness: Brightness.light,
       textTheme: GoogleFonts.poppinsTextTheme()
           .apply(bodyColor: Colors.white, displayColor: Colors.white),
     ),
@@ -19,7 +20,7 @@ class AppTheme {
     cupertinoOverrideTheme: NoDefaultCupertinoThemeData(
       brightness: Brightness.light,
       scaffoldBackgroundColor: CupertinoColors.white,
-      textTheme: CupertinoTextThemeData(textStyle: GoogleFonts.poppins()),
+      textTheme: CupertinoTextThemeData(),
       barBackgroundColor: CupertinoColors.lightBackgroundGray,
       primaryColor: CupertinoColors.activeBlue,
     ),
@@ -27,7 +28,8 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData(
     appBarTheme: AppBarTheme(
-      color: Color(0xFF1B2330),
+      color: CupertinoColors.darkBackgroundGray,
+      brightness: Brightness.dark,
       textTheme: GoogleFonts.poppinsTextTheme()
           .apply(bodyColor: Colors.white, displayColor: Colors.white),
     ),
