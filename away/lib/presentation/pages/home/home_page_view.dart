@@ -7,203 +7,253 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
-class HomePageView extends StatelessWidget {
+class HomePageView extends StatefulWidget {
+  @override
+  _HomePageViewState createState() => _HomePageViewState();
+}
+
+class _HomePageViewState extends State<HomePageView> {
+  bool showSearchWidget = false;
+
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool darkModeOn = brightness == Brightness.dark;
-    return CustomScrollView(
-      key: PageStorageKey(0),
-      physics: BouncingScrollPhysics(),
-      slivers: [
-        CupertinoSliverNavigationBar(
-          largeTitle: Text("Away"),
-          trailing: Padding(
-            padding: EdgeInsets.only(right: kDefaultPaddingSize * 0.2),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(
-                CupertinoIcons.conversation_bubble,
-                color: Theme.of(context).iconTheme.color,
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
+    return Stack(
+      children: [
+        CustomScrollView(
+          key: PageStorageKey(0),
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              expandedHeight: 80,
+              title: Text(
+                "Away",
+                style: Theme.of(context).textTheme.headline6,
               ),
-            ),
-          ),
-          backgroundColor: darkModeOn
-              ? CupertinoColors.darkBackgroundGray
-              : CupertinoColors.white,
-          brightness: darkModeOn ? Brightness.dark : Brightness.light,
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: kMediumHeight * 3),
-                Row(
-                  children: [
-                    Text("Suitable ",
-                        style: Theme.of(context).textTheme.headline5),
-                    AnimatedTextKit(
-                        repeatForever: true,
-                        pause: Duration(seconds: 2),
-                        animatedTexts: ["home", "apartment", "flat", "room"]
-                            .map(
-                              (text) => FadeAnimatedText(
-                                text,
-                                textStyle:
-                                    Theme.of(context).textTheme.headline5,
-                                duration: Duration(seconds: 2),
-                              ),
-                            )
-                            .toList()),
-                  ],
-                ),
-                SizedBox(height: kMediumHeight * 2),
-                GestureDetector(
-                  onTap: () {},
-                  child: TextField(
-                    cursorColor: Colors.white,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                        enabled: false,
-                        prefixIcon: Icon(CupertinoIcons.search,
-                            color: darkModeOn ? Colors.white : Colors.black),
-                        hintText: "Search anywhere in the world",
-                        hintStyle: TextStyle(
-                            color: darkModeOn ? Colors.white : Colors.black),
-                        contentPadding: EdgeInsets.only(left: 34.0),
-                        filled: true,
-                        fillColor:
-                            darkModeOn ? Colors.grey[800] : Colors.grey[200],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: BorderSide.none,
-                        )),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: kDefaultPaddingSize),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showSearchWidget = !showSearchWidget;
+                      });
+                    },
+                    child: Icon(
+                      CupertinoIcons.search,
+                      color: Theme.of(context).iconTheme.color,
+                      size: 30,
+                    ),
                   ),
                 ),
-                SizedBox(height: kMediumHeight * 3),
-                Text(
-                  "Hot spots",
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        letterSpacing: 0.41,
-                      ),
+                Padding(
+                  padding: EdgeInsets.only(right: kDefaultPaddingSize),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Icon(
+                      CupertinoIcons.conversation_bubble,
+                      color: Theme.of(context).iconTheme.color,
+                      size: 30,
+                    ),
+                  ),
                 ),
-                SizedBox(height: kMediumHeight * 3),
               ],
+              centerTitle: true,
             ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              scrollPhysics: BouncingScrollPhysics(),
-              height: 29.58 * SizeConfig.heightMultiplier,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              autoPlayAnimationDuration: Duration(seconds: 2),
-              autoPlayInterval: Duration(seconds: 8),
-              autoPlay: true,
-            ),
-            items: [
-              [
-                "https://raw.githubusercontent.com/Fox520/Assets/main/places/oshana.jpeg",
-                "Oshana"
-              ],
-              [
-                "https://raw.githubusercontent.com/Fox520/Assets/main/places/erongo.jpeg",
-                "Erongo"
-              ],
-              [
-                "https://raw.githubusercontent.com/Fox520/Assets/main/places/karas.jpeg",
-                "Karas"
-              ],
-              [
-                "https://raw.githubusercontent.com/Fox520/Assets/main/places/khomas.jpeg",
-                "Khomas"
-              ],
-              [
-                "https://raw.githubusercontent.com/Fox520/Assets/main/places/omusati.jpeg",
-                "Omusati"
-              ],
-            ].map((place) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Navigate to map at coords
-                    },
-                    child: HotSpotItem(place),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: kMediumHeight * 3),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Promoted",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(letterSpacing: 0.41),
+                    SizedBox(height: kMediumHeight),
+                    Row(
+                      children: [
+                        Text("Suitable ",
+                            style: Theme.of(context).textTheme.headline5),
+                        AnimatedTextKit(
+                            repeatForever: true,
+                            pause: Duration(seconds: 2),
+                            animatedTexts: ["home", "apartment", "flat", "room"]
+                                .map(
+                                  (text) => FadeAnimatedText(
+                                    text,
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline5,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                )
+                                .toList()),
+                      ],
                     ),
-                    Text(
-                      "See all",
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          letterSpacing: 0.41,
-                          color: CupertinoColors.activeBlue,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(height: kMediumHeight * 2),
                   ],
                 ),
-                SizedBox(height: kMediumHeight * 3),
-              ],
+              ),
             ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              scrollPhysics: BouncingScrollPhysics(),
-              height: 32 * SizeConfig.heightMultiplier,
-              enlargeCenterPage: false,
-              enableInfiniteScroll: false,
-              autoPlayAnimationDuration: Duration(seconds: 2),
-              autoPlayInterval: Duration(seconds: 8),
-              autoPlay: true,
-            ),
-            items: [
-              "https://images.prop24.com/267180470",
-              "https://media.cntraveler.com/photos/5ea354e75e5dc70008d054b9/16:9/w_2560%2Cc_limit/24912891-australia-3.jpg",
-              "https://static.trip101.com/main_pics/261395/medium.jpg",
-              "https://floridatrippers.com/wp-content/uploads/2020/07/airbnb-in-florida-sanctuary-of-light-1600x900.jpg",
-              "https://images.prop24.com/267180470",
-            ].map((place) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    margin: EdgeInsets.only(right: kDefaultPaddingSize),
-                    child: SmallPropertyPost(place),
+            SliverToBoxAdapter(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  scrollPhysics: BouncingScrollPhysics(),
+                  height: 29.58 * SizeConfig.heightMultiplier,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  autoPlayAnimationDuration: Duration(seconds: 2),
+                  autoPlayInterval: Duration(seconds: 8),
+                  autoPlay: true,
+                ),
+                items: [
+                  [
+                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/oshana.jpeg",
+                    "Oshana"
+                  ],
+                  [
+                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/erongo.jpeg",
+                    "Erongo"
+                  ],
+                  [
+                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/karas.jpeg",
+                    "Karas"
+                  ],
+                  [
+                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/khomas.jpeg",
+                    "Khomas"
+                  ],
+                  [
+                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/omusati.jpeg",
+                    "Omusati"
+                  ],
+                ].map((place) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return GestureDetector(
+                        onTap: () {
+                          // Navigate to map at coords
+                        },
+                        child: HotSpotItem(place),
+                      );
+                    },
                   );
-                },
-              );
-            }).toList(),
-          ),
+                }).toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: kMediumHeight * 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Promoted",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(letterSpacing: 0.41),
+                        ),
+                        Text(
+                          "See all",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  letterSpacing: 0.41,
+                                  color: CupertinoColors.activeBlue,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: kMediumHeight * 3),
+                  ],
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  scrollPhysics: BouncingScrollPhysics(),
+                  height: 32 * SizeConfig.heightMultiplier,
+                  enlargeCenterPage: false,
+                  enableInfiniteScroll: false,
+                  autoPlayAnimationDuration: Duration(seconds: 2),
+                  autoPlayInterval: Duration(seconds: 8),
+                  autoPlay: true,
+                ),
+                items: [
+                  "https://images.prop24.com/267180470",
+                  "https://media.cntraveler.com/photos/5ea354e75e5dc70008d054b9/16:9/w_2560%2Cc_limit/24912891-australia-3.jpg",
+                  "https://static.trip101.com/main_pics/261395/medium.jpg",
+                  "https://floridatrippers.com/wp-content/uploads/2020/07/airbnb-in-florida-sanctuary-of-light-1600x900.jpg",
+                  "https://images.prop24.com/267180470",
+                ].map((place) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        margin: EdgeInsets.only(right: kDefaultPaddingSize),
+                        child: SmallPropertyPost(place),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: kMediumHeight * 3),
+            )
+          ],
         ),
-        SliverToBoxAdapter(
-          child: SizedBox(height: kMediumHeight * 3),
-        )
+        if (showSearchWidget)
+          FloatingSearchBar(
+            hint: 'Search anywhere in the world',
+            scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+            transitionDuration: const Duration(milliseconds: 800),
+            transitionCurve: Curves.easeInOut,
+            physics: const BouncingScrollPhysics(),
+            axisAlignment: isPortrait ? 0.0 : -1.0,
+            openAxisAlignment: 0.0,
+            width: isPortrait ? 600 : 500,
+            backgroundColor: Colors.grey.shade800,
+            debounceDelay: const Duration(milliseconds: 500),
+            onFocusChanged: (focus) {
+              setState(() {
+                showSearchWidget = focus;
+              });
+            },
+            onQueryChanged: (query) {
+              // Call your model, bloc, controller here.
+            },
+            // Specify a custom transition to be used for
+            // animating between opened and closed stated.
+            transition: SlideFadeFloatingSearchBarTransition(),
+            actions: [
+              FloatingSearchBarAction.searchToClear(
+                showIfClosed: false,
+              ),
+            ],
+            builder: (context, transition) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Material(
+                  color: Colors.white,
+                  elevation: 4.0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: Colors.accents.getRange(3, 8).map((color) {
+                      return Container(height: 80, color: color);
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
+          )
       ],
     );
   }
