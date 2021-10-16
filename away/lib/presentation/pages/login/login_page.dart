@@ -76,10 +76,10 @@ class LoginPage extends StatelessWidget {
 
               if (state is AuthSuccess) {
                 // Go to home
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("logged in, profile loaded")));
-                //Navigator.of(context).pushNamedAndRemoveUntil(
-                //    HomePage.routeName, (Route<dynamic> route) => false);
+                // ScaffoldMessenger.of(context).showSnackBar(
+                // SnackBar(content: Text("logged in, profile loaded")));
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    HomePage.routeName, (Route<dynamic> route) => false);
               }
             },
             builder: (context, state) {

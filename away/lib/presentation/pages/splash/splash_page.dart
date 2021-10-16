@@ -1,6 +1,7 @@
 import 'package:away/cubit/splash_cubit.dart';
 import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
+import 'package:away/presentation/pages/home/home_page.dart';
 import 'package:away/presentation/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +30,8 @@ class _SplashPageState extends State<SplashPage> {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 LoginPage.routeName, (Route<dynamic> route) => false);
           } else {
-            // Navigator.of(context).pushNamedAndRemoveUntil(
-            //     HomePage.routeName, (Route<dynamic> route) => false);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                HomePage.routeName, (Route<dynamic> route) => false);
           }
         },
         builder: (context, state) {

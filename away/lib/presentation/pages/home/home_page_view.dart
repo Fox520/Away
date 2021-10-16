@@ -2,12 +2,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:away/config/constants.dart';
 import 'package:away/config/size_config.dart';
+import 'package:away/presentation/pages/search_page/search_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class HomePageView extends StatefulWidget {
   @override
@@ -15,13 +15,8 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
-  bool showSearchWidget = false;
-
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-
     return Stack(
       children: [
         CustomScrollView(
@@ -40,9 +35,7 @@ class _HomePageViewState extends State<HomePageView> {
                   padding: EdgeInsets.only(right: kDefaultPaddingSize),
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        showSearchWidget = !showSearchWidget;
-                      });
+                      Navigator.of(context).pushNamed(SearchPage.routeName);
                     },
                     child: Icon(
                       CupertinoIcons.search,
@@ -210,50 +203,6 @@ class _HomePageViewState extends State<HomePageView> {
             )
           ],
         ),
-        if (showSearchWidget)
-          FloatingSearchBar(
-            hint: 'Search anywhere in the world',
-            scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-            transitionDuration: const Duration(milliseconds: 800),
-            transitionCurve: Curves.easeInOut,
-            physics: const BouncingScrollPhysics(),
-            axisAlignment: isPortrait ? 0.0 : -1.0,
-            openAxisAlignment: 0.0,
-            width: isPortrait ? 600 : 500,
-            backgroundColor: Colors.grey.shade800,
-            debounceDelay: const Duration(milliseconds: 500),
-            onFocusChanged: (focus) {
-              setState(() {
-                showSearchWidget = focus;
-              });
-            },
-            onQueryChanged: (query) {
-              // Call your model, bloc, controller here.
-            },
-            // Specify a custom transition to be used for
-            // animating between opened and closed stated.
-            transition: SlideFadeFloatingSearchBarTransition(),
-            actions: [
-              FloatingSearchBarAction.searchToClear(
-                showIfClosed: false,
-              ),
-            ],
-            builder: (context, transition) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Material(
-                  color: Colors.white,
-                  elevation: 4.0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: Colors.accents.getRange(3, 8).map((color) {
-                      return Container(height: 80, color: color);
-                    }).toList(),
-                  ),
-                ),
-              );
-            },
-          )
       ],
     );
   }
