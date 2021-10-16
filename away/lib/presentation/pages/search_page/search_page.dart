@@ -58,14 +58,11 @@ class _SearchPageState extends State<SearchPage> {
                   getIt<PropertyRepository>().autocompleteResults.clear();
                 },
                 onChanged: (String value) {
-                  if (value.length > 2) {
-                    // Use debounce to avoid calling server rapidly
-                    if (_debounce?.isActive ?? false) _debounce!.cancel();
-                    _debounce = Timer(const Duration(milliseconds: 500), () {
-                      BlocProvider.of<SearchCubit>(context)
-                          .autocompletePlaces(value);
-                    });
+                  if (value.length > 1) {
+                    BlocProvider.of<SearchCubit>(context)
+                        .autocompletePlaces(value, null);
                   }
+
                   if (value.length == 0) {
                     // Clear results
                     getIt<PropertyRepository>().autocompleteResults.clear();
@@ -78,6 +75,8 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
+            // TODO: list doesn't rebuild sometimes; user needs to tap "done" on keyboard
+            print(state);
             return SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -87,7 +86,8 @@ class _SearchPageState extends State<SearchPage> {
                     title: Text(result.title),
                     subtitle: Text(result.secondaryText),
                     onTap: () {
-                      print(result.placeID);
+                      BlocProvider.of<SearchCubit>(context)
+                          .autocompletePlaces(null, result.placeID);
                     },
                   );
                 },

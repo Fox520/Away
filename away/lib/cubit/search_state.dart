@@ -15,15 +15,3 @@ class SearchRequest extends SearchState {
 
   SearchRequest(this.query) : super(property: query);
 }
-
-class SearchQueryResult extends SearchState {
-  final List<LocationAutocomplete> autocompletes;
-
-  SearchQueryResult(this.autocompletes) : super(property: autocompletes);
-}
-
-class SearchDetailsResult extends SearchState {
-  final List<LocationDetails> details;
-
-  SearchDetailsResult(this.details) : super(property: details);
-}

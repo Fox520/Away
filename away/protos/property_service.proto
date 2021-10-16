@@ -193,5 +193,5 @@ service PropertyService {
     rpc DeleteProperty (DeletePropertyRequest) returns (DeletePropertyResponse){};
     rpc GetFeaturedAreas (FeaturedAreasRequest) returns (FeaturedAreasResponse){};
     rpc GetPromotedProperties (PromotedRequest) returns (stream PromotedResponse){};
-    rpc LocationSearch (LocationSearchRequest) returns (LocationSearchResponse){};
+    rpc LocationSearch (stream LocationSearchRequest) returns (stream LocationSearchResponse){};
 }

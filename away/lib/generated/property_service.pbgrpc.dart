@@ -136,10 +136,10 @@ class PropertyServiceClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$1.LocationSearchResponse> locationSearch(
-      $1.LocationSearchRequest request,
+  $grpc.ResponseStream<$1.LocationSearchResponse> locationSearch(
+      $async.Stream<$1.LocationSearchRequest> request,
       {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$locationSearch, request, options: options);
+    return $createStreamingCall(_$locationSearch, request, options: options);
   }
 }
 
@@ -226,9 +226,9 @@ abstract class PropertyServiceBase extends $grpc.Service {
     $addMethod($grpc.ServiceMethod<$1.LocationSearchRequest,
             $1.LocationSearchResponse>(
         'LocationSearch',
-        locationSearch_Pre,
-        false,
-        false,
+        locationSearch,
+        true,
+        true,
         ($core.List<$core.int> value) =>
             $1.LocationSearchRequest.fromBuffer(value),
         ($1.LocationSearchResponse value) => value.writeToBuffer()));
@@ -286,12 +286,6 @@ abstract class PropertyServiceBase extends $grpc.Service {
     yield* getPromotedProperties(call, await request);
   }
 
-  $async.Future<$1.LocationSearchResponse> locationSearch_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$1.LocationSearchRequest> request) async {
-    return locationSearch(call, await request);
-  }
-
   $async.Stream<$1.GetMinimalPropertiesResponse> getMinimalInfoProperties(
       $grpc.ServiceCall call, $1.GetMinimalPropertiesRequest request);
   $async.Future<$1.SinglePropertyResponse> getSingleProperty(
@@ -310,6 +304,6 @@ abstract class PropertyServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.FeaturedAreasRequest request);
   $async.Stream<$1.PromotedResponse> getPromotedProperties(
       $grpc.ServiceCall call, $1.PromotedRequest request);
-  $async.Future<$1.LocationSearchResponse> locationSearch(
-      $grpc.ServiceCall call, $1.LocationSearchRequest request);
+  $async.Stream<$1.LocationSearchResponse> locationSearch(
+      $grpc.ServiceCall call, $async.Stream<$1.LocationSearchRequest> request);
 }
