@@ -2,12 +2,17 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:away/config/constants.dart';
 import 'package:away/config/size_config.dart';
+import 'package:away/cubit/featured_cubit.dart';
+import 'package:away/data/repositories/user_repository.dart';
+import 'package:away/di/locator.dart';
+import 'package:away/generated/property_service.pbgrpc.dart';
 import 'package:away/presentation/pages/search_page/search_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageView extends StatefulWidget {
   @override
@@ -15,6 +20,18 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  @override
+  void initState() {
+    super.initState();
+    // Ensure screen is initialised
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      final location =
+          await getIt<UserRepository>().getGeneralUserLocationInfo();
+      BlocProvider.of<FeaturedCubit>(context)
+          .getFeaturedAreas(location.countryCode);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -90,49 +107,42 @@ class _HomePageViewState extends State<HomePageView> {
               ),
             ),
             SliverToBoxAdapter(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  scrollPhysics: BouncingScrollPhysics(),
-                  height: 29.58 * SizeConfig.heightMultiplier,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: false,
-                  autoPlayAnimationDuration: Duration(seconds: 2),
-                  autoPlayInterval: Duration(seconds: 8),
-                  autoPlay: true,
-                ),
-                items: [
-                  [
-                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/oshana.jpeg",
-                    "Oshana"
-                  ],
-                  [
-                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/erongo.jpeg",
-                    "Erongo"
-                  ],
-                  [
-                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/karas.jpeg",
-                    "Karas"
-                  ],
-                  [
-                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/khomas.jpeg",
-                    "Khomas"
-                  ],
-                  [
-                    "https://raw.githubusercontent.com/Fox520/Assets/main/places/omusati.jpeg",
-                    "Omusati"
-                  ],
-                ].map((place) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to map at coords
-                        },
-                        child: HotSpotItem(place),
-                      );
-                    },
+              child: BlocBuilder<FeaturedCubit, FeaturedState>(
+                builder: (context, state) {
+                  if (state is FeaturedResponse) {
+                    final areas = state.areas;
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        scrollPhysics: BouncingScrollPhysics(),
+                        height: 29.58 * SizeConfig.heightMultiplier,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                        autoPlayAnimationDuration: Duration(seconds: 2),
+                        autoPlayInterval: Duration(seconds: 8),
+                        autoPlay: true,
+                      ),
+                      items: areas.map((place) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {
+                                // Navigate to map at coords
+                              },
+                              child: HotSpotItem(place),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    );
+                  }
+                  return Container(
+                    height: 29.58 * SizeConfig.heightMultiplier,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
-                }).toList(),
+                },
               ),
             ),
             SliverToBoxAdapter(
@@ -209,8 +219,8 @@ class _HomePageViewState extends State<HomePageView> {
 }
 
 class HotSpotItem extends StatelessWidget {
-  final List<String> place;
-  HotSpotItem(this.place);
+  final FeaturedArea area;
+  HotSpotItem(this.area);
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +229,7 @@ class HotSpotItem extends StatelessWidget {
         Container(
           height: 29.58 * SizeConfig.heightMultiplier,
           child: CachedNetworkImage(
-            imageUrl: place[0],
+            imageUrl: area.photoURL,
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -241,7 +251,7 @@ class HotSpotItem extends StatelessWidget {
           left: kMediumWidth,
           bottom: kMediumHeight,
           child: Text(
-            place[1],
+            area.title,
             style: Theme.of(context)
                 .textTheme
                 .headline4!

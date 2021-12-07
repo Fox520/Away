@@ -12,4 +12,8 @@ class PropertyRepository {
       Function onPlaceDetails) {
     remoteDataSource.performQuery(locationSearchRequestStream, onPlaceDetails);
   }
+
+  Future<List<FeaturedArea>> retrieveFeaturedAreas(String countryCode) {
+    return remoteDataSource.retrieveFeaturedAreas(countryCode);
+  }
 }

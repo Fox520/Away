@@ -34,4 +34,14 @@ class PropertyRemoteDataSource {
       print("added");
     }
   }
+
+  Future<List<FeaturedArea>> retrieveFeaturedAreas(String code) async {
+    // retrieve auth token
+    String token = await getIt<UserRepository>().firebaseUser!.getIdToken();
+
+    var response = await client.getFeaturedAreas(
+        FeaturedAreasRequest(country: code),
+        options: CallOptions(metadata: {"token": token}));
+    return response.featuredAreas;
+  }
 }

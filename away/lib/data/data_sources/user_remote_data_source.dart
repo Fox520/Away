@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:away/core/error/failures.dart';
+import 'package:away/data/models/general_location_info.dart';
+import 'package:http/http.dart' as http;
 import 'package:away/di/locator.dart';
 import 'package:away/generated/user_service.pbgrpc.dart';
 import 'package:dartz/dartz.dart';
@@ -8,6 +12,7 @@ import 'package:grpc/grpc.dart';
 
 class UserRemoteDataSource {
   final UserServiceClient client;
+  GeneralLocationInfo? _generalLocationInfo;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   UserRemoteDataSource(this.client);
@@ -82,5 +87,17 @@ class UserRemoteDataSource {
       print(error);
       return Left(UnknownFailure(""));
     }
+  }
+
+  Future<GeneralLocationInfo> getGeneralUserLocationInfo() async {
+    if (_generalLocationInfo != null) {
+      return _generalLocationInfo!;
+    }
+    //https not free
+    var response = await http.get(Uri.parse('http://ip-api.com/json'));
+    _generalLocationInfo =
+        GeneralLocationInfo.fromJson(jsonDecode(response.body));
+    // Possibly save on device at some stage
+    return _generalLocationInfo!;
   }
 }

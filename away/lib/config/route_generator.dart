@@ -1,4 +1,5 @@
 import 'package:away/cubit/auth_cubit.dart';
+import 'package:away/cubit/featured_cubit.dart';
 import 'package:away/cubit/search_cubit.dart';
 import 'package:away/presentation/pages/home/home_page.dart';
 import 'package:away/presentation/pages/login/login_page.dart';
@@ -31,7 +32,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return HomePage();
+            return BlocProvider(
+              create: (context) => FeaturedCubit(),
+              child: HomePage(),
+            );
           },
         );
       case SearchPage.routeName:
