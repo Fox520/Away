@@ -1,4 +1,4 @@
-import 'package:away/presentation/pages/discover/discover_page.dart';
+import 'package:away/presentation/pages/discover/discover_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _children = [
       HomePageView(),
-      DiscoverPage(),
+      DiscoverView(),
       Container(
         color: Colors.yellow,
         width: double.infinity,
