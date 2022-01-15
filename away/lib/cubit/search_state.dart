@@ -10,8 +10,16 @@ abstract class SearchState extends Equatable {
 
 class SearchInitial extends SearchState {}
 
+class SearchRequestTapLoading extends SearchState {}
+
 class SearchRequest extends SearchState {
   final String query;
 
   SearchRequest(this.query) : super(property: query);
+}
+
+class SearchRequestTapSuccess extends SearchState {
+  final LocationDetails details;
+
+  SearchRequestTapSuccess(this.details) : super(property: details);
 }

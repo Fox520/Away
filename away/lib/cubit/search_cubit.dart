@@ -17,9 +17,6 @@ class SearchCubit extends Cubit<SearchState> {
   bool _remoteWasAlreadyCalled = false;
 
   void autocompletePlaces(String? query, String? placeId) async {
-    // PS: User may at times need to backspace for results to show and fwiw it works
-    // TODO: Convince management that this is a feature meant to increase the time
-    // a user spends on the app and therefore better ranking.
     if (_locationSearchRequestStream == null) {
       _streamController = StreamController<LocationSearchRequest>();
       _locationSearchRequestStream = _streamController!.stream;
@@ -31,6 +28,7 @@ class SearchCubit extends Cubit<SearchState> {
       getIt<PropertyRepository>().performQuery(_locationSearchRequestStream!,
           (LocationDetails a) {
         print(a.placeID);
+        emit(SearchRequestTapSuccess(a));
       });
     }
     if (query != null && placeId == null) {
@@ -43,7 +41,7 @@ class SearchCubit extends Cubit<SearchState> {
       // Details call
       _streamController!.add(LocationSearchRequest(
           details: LocationDetailsQuery(placeID: placeId)));
-      emit(SearchRequest(placeId));
+      emit(SearchRequestTapLoading());
     }
   }
 

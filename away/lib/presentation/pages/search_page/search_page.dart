@@ -74,9 +74,19 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
-          BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
-            // TODO: list doesn't rebuild sometimes; user needs to tap "done" on keyboard
+          BlocConsumer<SearchCubit, SearchState>(listener: (context, state) {
+            if (state is SearchRequestTapSuccess) {
+              // navigate to map
+            }
+          }, builder: (context, state) {
             print(state);
+            if (state is SearchRequestTapLoading) {
+              return SliverToBoxAdapter(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
             return SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
