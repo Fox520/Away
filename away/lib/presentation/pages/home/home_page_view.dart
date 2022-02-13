@@ -37,12 +37,12 @@ class _HomePageViewState extends State<HomePageView> {
     return Stack(
       children: [
         CustomScrollView(
-          key: PageStorageKey(0),
+          // key: PageStorageKey(0),
           physics: BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
               pinned: true,
-              expandedHeight: 80,
+              // expandedHeight: 80,
               title: Text(
                 "Away",
                 style: Theme.of(context).textTheme.headline6,
@@ -122,15 +122,11 @@ class _HomePageViewState extends State<HomePageView> {
                         autoPlay: true,
                       ),
                       items: areas.map((place) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return GestureDetector(
-                              onTap: () {
-                                // Navigate to map at coords
-                              },
-                              child: HotSpotItem(place),
-                            );
+                        return GestureDetector(
+                          onTap: () {
+                            // Navigate to map at coords
                           },
+                          child: FeaturedItem(place),
                         );
                       }).toList(),
                     );
@@ -218,9 +214,9 @@ class _HomePageViewState extends State<HomePageView> {
   }
 }
 
-class HotSpotItem extends StatelessWidget {
+class FeaturedItem extends StatelessWidget {
   final FeaturedArea area;
-  HotSpotItem(this.area);
+  FeaturedItem(this.area);
 
   @override
   Widget build(BuildContext context) {
@@ -316,23 +312,27 @@ class SmallPropertyPost extends StatelessWidget {
                       padding: EdgeInsets.all(kMediumWidth),
                       margin: EdgeInsets.only(right: kSmallWidth),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: darkModeOn
+                            ? CupertinoColors.darkBackgroundGray
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
                         Icons.pets,
-                        color: Colors.black,
+                        color: darkModeOn ? Colors.white : Colors.black,
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.all(kMediumWidth),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: darkModeOn
+                            ? CupertinoColors.darkBackgroundGray
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
                         Icons.wifi,
-                        color: Colors.black,
+                        color: darkModeOn ? Colors.white : Colors.black,
                       ),
                     ),
                   ],
@@ -352,15 +352,6 @@ class SmallPropertyPost extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: kMediumWidth,
-                        height: kMediumHeight,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF00A727),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      SizedBox(width: kSmallWidth),
                       Text(
                         "2 Bedroom Flat",
                         style: CupertinoTheme.of(context)

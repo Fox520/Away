@@ -18,11 +18,9 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController _searchTextController = TextEditingController();
-  Timer? _debounce;
 
   @override
   void dispose() {
-    _debounce?.cancel();
     // FutureTODO: if next page is map, don't clear
     getIt<PropertyRepository>().autocompleteResults.clear();
     _searchTextController.dispose();

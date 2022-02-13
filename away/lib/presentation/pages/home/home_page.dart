@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       HomePageView(),
       DiscoverView(),
       Container(
-        color: Colors.yellow,
+        color: Colors.red,
         width: double.infinity,
         height: double.infinity,
       ),

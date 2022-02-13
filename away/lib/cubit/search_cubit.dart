@@ -21,12 +21,13 @@ class SearchCubit extends Cubit<SearchState> {
       _streamController = StreamController<LocationSearchRequest>();
       _locationSearchRequestStream = _streamController!.stream;
     }
-    // If remote was already called, only add to stream
-    // otherwise call then add to stream
+    // If remote was already called, only add to stream; otherwise call
+    // then add to stream; avoids creating multiple remote calls
     if (!_remoteWasAlreadyCalled) {
       _remoteWasAlreadyCalled = true;
       getIt<PropertyRepository>().performQuery(_locationSearchRequestStream!,
           (LocationDetails a) {
+            // Result tap callback
         print(a.placeID);
         emit(SearchRequestTapSuccess(a));
       });
