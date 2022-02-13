@@ -1,8 +1,7 @@
 import 'package:away/presentation/pages/discover/discover_view.dart';
+import 'package:away/presentation/pages/home/home_page_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'home_page_view.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/home_page";
@@ -13,7 +12,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
-  int lastIndex = 0;
   late List<Widget> _children;
 
   @override
@@ -23,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       HomePageView(),
       DiscoverView(),
       Container(
-        color: Colors.red,
+        color: Colors.blue,
         width: double.infinity,
         height: double.infinity,
       ),

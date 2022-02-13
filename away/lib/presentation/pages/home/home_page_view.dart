@@ -5,13 +5,12 @@ import 'package:away/config/size_config.dart';
 import 'package:away/cubit/featured_cubit.dart';
 import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
-import 'package:away/generated/property_service.pbgrpc.dart';
+import 'package:away/generated/property_service.pb.dart';
 import 'package:away/presentation/pages/search_page/search_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageView extends StatefulWidget {
@@ -34,181 +33,172 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          // key: PageStorageKey(0),
-          physics: BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              // expandedHeight: 80,
-              title: Text(
-                "Away",
-                style: Theme.of(context).textTheme.headline6,
+    return CustomScrollView(
+      physics: BouncingScrollPhysics(),
+      slivers: [
+        SliverAppBar(
+          pinned: true,
+          title: Text(
+            "Away",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: kDefaultPaddingSize),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(SearchPage.routeName);
+                },
+                child: Icon(
+                  CupertinoIcons.search,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 30,
+                ),
               ),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(right: kDefaultPaddingSize),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(SearchPage.routeName);
-                    },
-                    child: Icon(
-                      CupertinoIcons.search,
-                      color: Theme.of(context).iconTheme.color,
-                      size: 30,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: kDefaultPaddingSize),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      CupertinoIcons.conversation_bubble,
-                      color: Theme.of(context).iconTheme.color,
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ],
-              centerTitle: true,
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: EdgeInsets.only(right: kDefaultPaddingSize),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  CupertinoIcons.conversation_bubble,
+                  color: Theme.of(context).iconTheme.color,
+                  size: 30,
+                ),
+              ),
+            ),
+          ],
+          centerTitle: true,
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: kMediumHeight),
+                Row(
                   children: [
-                    SizedBox(height: kMediumHeight),
-                    Row(
-                      children: [
-                        Text("Suitable ",
-                            style: Theme.of(context).textTheme.headline5),
-                        AnimatedTextKit(
-                            repeatForever: true,
-                            pause: Duration(seconds: 2),
-                            animatedTexts: ["home", "apartment", "flat", "room"]
-                                .map(
-                                  (text) => FadeAnimatedText(
-                                    text,
-                                    textStyle:
-                                        Theme.of(context).textTheme.headline5,
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                )
-                                .toList()),
-                      ],
-                    ),
-                    SizedBox(height: kMediumHeight * 2),
+                    Text("Suitable ",
+                        style: Theme.of(context).textTheme.headline5),
+                    AnimatedTextKit(
+                        repeatForever: true,
+                        pause: Duration(seconds: 2),
+                        animatedTexts: ["home", "apartment", "flat", "room"]
+                            .map(
+                              (text) => FadeAnimatedText(
+                                text,
+                                textStyle:
+                                    Theme.of(context).textTheme.headline5,
+                                duration: Duration(seconds: 2),
+                              ),
+                            )
+                            .toList()),
                   ],
                 ),
-              ),
+                SizedBox(height: kMediumHeight * 2),
+              ],
             ),
-            SliverToBoxAdapter(
-              child: BlocBuilder<FeaturedCubit, FeaturedState>(
-                builder: (context, state) {
-                  if (state is FeaturedResponse) {
-                    final areas = state.areas;
-                    return CarouselSlider(
-                      options: CarouselOptions(
-                        scrollPhysics: BouncingScrollPhysics(),
-                        height: 29.58 * SizeConfig.heightMultiplier,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        autoPlayAnimationDuration: Duration(seconds: 2),
-                        autoPlayInterval: Duration(seconds: 8),
-                        autoPlay: true,
-                      ),
-                      items: areas.map((place) {
-                        return GestureDetector(
-                          onTap: () {
-                            // Navigate to map at coords
-                          },
-                          child: FeaturedItem(place),
-                        );
-                      }).toList(),
-                    );
-                  }
-                  return Container(
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: BlocBuilder<FeaturedCubit, FeaturedState>(
+            builder: (context, state) {
+              if (state is FeaturedResponse) {
+                final areas = state.areas;
+                return CarouselSlider(
+                  options: CarouselOptions(
+                    scrollPhysics: BouncingScrollPhysics(),
                     height: 29.58 * SizeConfig.heightMultiplier,
-                    width: MediaQuery.of(context).size.width,
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                    enlargeCenterPage: true,
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(seconds: 2),
+                    autoPlayInterval: Duration(seconds: 8),
+                    autoPlay: true,
+                  ),
+                  items: areas.map((place) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Navigate to map at coords
+                      },
+                      child: FeaturedItem(place),
+                    );
+                  }).toList(),
+                );
+              }
+              return Container(
+                height: 29.58 * SizeConfig.heightMultiplier,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: kMediumHeight * 3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Promoted",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(letterSpacing: 0.41),
                     ),
+                    Text(
+                      "See all",
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          letterSpacing: 0.41,
+                          color: CupertinoColors.activeBlue,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: kMediumHeight * 3),
+              ],
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: CarouselSlider(
+            options: CarouselOptions(
+              scrollPhysics: BouncingScrollPhysics(),
+              height: 32 * SizeConfig.heightMultiplier,
+              enlargeCenterPage: false,
+              enableInfiniteScroll: false,
+              autoPlayAnimationDuration: Duration(seconds: 2),
+              autoPlayInterval: Duration(seconds: 8),
+              autoPlay: true,
+            ),
+            items: [
+              "https://images.prop24.com/267180470",
+              "https://media.cntraveler.com/photos/5ea354e75e5dc70008d054b9/16:9/w_2560%2Cc_limit/24912891-australia-3.jpg",
+              "https://static.trip101.com/main_pics/261395/medium.jpg",
+              "https://floridatrippers.com/wp-content/uploads/2020/07/airbnb-in-florida-sanctuary-of-light-1600x900.jpg",
+              "https://images.prop24.com/267180470",
+            ].map((place) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    margin: EdgeInsets.only(right: kDefaultPaddingSize),
+                    child: SmallPropertyPost(place),
                   );
                 },
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: kMediumHeight * 3),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Promoted",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(letterSpacing: 0.41),
-                        ),
-                        Text(
-                          "See all",
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(
-                                  letterSpacing: 0.41,
-                                  color: CupertinoColors.activeBlue,
-                                  fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: kMediumHeight * 3),
-                  ],
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  scrollPhysics: BouncingScrollPhysics(),
-                  height: 32 * SizeConfig.heightMultiplier,
-                  enlargeCenterPage: false,
-                  enableInfiniteScroll: false,
-                  autoPlayAnimationDuration: Duration(seconds: 2),
-                  autoPlayInterval: Duration(seconds: 8),
-                  autoPlay: true,
-                ),
-                items: [
-                  "https://images.prop24.com/267180470",
-                  "https://media.cntraveler.com/photos/5ea354e75e5dc70008d054b9/16:9/w_2560%2Cc_limit/24912891-australia-3.jpg",
-                  "https://static.trip101.com/main_pics/261395/medium.jpg",
-                  "https://floridatrippers.com/wp-content/uploads/2020/07/airbnb-in-florida-sanctuary-of-light-1600x900.jpg",
-                  "https://images.prop24.com/267180470",
-                ].map((place) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        margin: EdgeInsets.only(right: kDefaultPaddingSize),
-                        child: SmallPropertyPost(place),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: kMediumHeight * 3),
-            )
-          ],
+              );
+            }).toList(),
+          ),
         ),
+        SliverToBoxAdapter(
+          child: SizedBox(height: kMediumHeight * 3),
+        )
       ],
     );
   }
