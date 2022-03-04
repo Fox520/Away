@@ -1,3 +1,4 @@
+import 'package:away/presentation/pages/account/account_view.dart';
 import 'package:away/presentation/pages/discover/discover_view.dart';
 import 'package:away/presentation/pages/home/home_page_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,11 +21,7 @@ class _HomePageState extends State<HomePage> {
     _children = [
       HomePageView(),
       DiscoverView(),
-      Container(
-        color: Colors.blue,
-        width: double.infinity,
-        height: double.infinity,
-      ),
+      AccountView(),
     ];
   }
 
