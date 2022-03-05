@@ -35,6 +35,8 @@ class PromotedPropertiesCubit extends Cubit<PromotedPropertiesState> {
         props.forEach((element) {
           if (!foundPropsId.contains(element.property.id)) {
             totalFound += 1;
+          } else {
+            foundPropsId.add(element.property.id);
           }
         });
 
