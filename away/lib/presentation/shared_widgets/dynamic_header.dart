@@ -1,9 +1,13 @@
+import 'package:away/di/locator.dart';
+import 'package:away/generated/user_service.pbgrpc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDynamicHeader extends SliverPersistentHeaderDelegate {
-  bool showMessage;
-  MyDynamicHeader({required this.showMessage});
+  final AwayUser awayUser;
+  final loggedInUser = getIt<AwayUser>();
+  MyDynamicHeader({required this.awayUser});
+
   @override
   double get maxExtent => 350.0;
 
@@ -12,6 +16,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    bool showMessage = loggedInUser.id != awayUser.id;
     return LayoutBuilder(builder: (context, constraints) {
       final double percentage =
           (constraints.maxHeight - minExtent) / (maxExtent - minExtent);
@@ -38,7 +43,7 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
                   maxRadius: 100,
                   child: ClipOval(
                     child: Image.network(
-                      "https://lh3.googleusercontent.com/ogw/ADea4I47TxMtc8ORxb6jdGA1r3bBLrL4pNTdesEwDViQPZ0",
+                      awayUser.profilePictureUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -49,8 +54,8 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
               Column(
                 children: [
                   Text(
-                    "Thomas David",
-                    style: GoogleFonts.cabinSketch(fontSize: 45 * percentage),
+                    awayUser.userName,
+                    style: GoogleFonts.corben(fontSize: 40 * percentage),
                   ),
                   SizedBox(height: 15 * percentage),
                   if (showMessage)

@@ -1,9 +1,11 @@
+import 'package:away/generated/user_service.pb.dart';
 import 'package:away/presentation/shared_widgets/dynamic_header.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+// TODO
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  final AwayUser awayUser;
+  ProfilePage({required this.awayUser});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class ProfilePage extends StatelessWidget {
       slivers: <Widget>[
         SliverPersistentHeader(
           pinned: true,
-          delegate: MyDynamicHeader(showMessage: true),
+          delegate: MyDynamicHeader(awayUser: awayUser),
         ),
         if (1 > 2)
           SliverAppBar(

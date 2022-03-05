@@ -1,9 +1,12 @@
 import 'package:away/config/constants.dart';
+import 'package:away/di/locator.dart';
+import 'package:away/generated/user_service.pb.dart';
 import 'package:away/presentation/shared_widgets/dynamic_header.dart';
 import 'package:flutter/material.dart';
 
 class AccountView extends StatelessWidget {
-  const AccountView({Key? key}) : super(key: key);
+  // Switch to stream later on
+  final loggedInUser = getIt<AwayUser>();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class AccountView extends StatelessWidget {
       slivers: <Widget>[
         SliverPersistentHeader(
           pinned: true,
-          delegate: MyDynamicHeader(showMessage: false),
+          delegate: MyDynamicHeader(awayUser: loggedInUser),
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -32,7 +35,6 @@ class AccountView extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "About Me",
@@ -40,7 +42,7 @@ class AccountView extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+                  loggedInUser.bio,
                   textAlign: TextAlign.center,
                 ),
               ],
