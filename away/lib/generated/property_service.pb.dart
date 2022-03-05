@@ -452,6 +452,7 @@ class MinimalProperty extends $pb.GeneratedMessage {
     ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userID', protoName: 'userID')
     ..a<$core.double>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'latitude', $pb.PbFieldType.OF)
     ..a<$core.double>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'longitude', $pb.PbFieldType.OF)
+    ..aOS(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'town')
     ..hasRequiredFields = false
   ;
 
@@ -474,6 +475,7 @@ class MinimalProperty extends $pb.GeneratedMessage {
     $core.String? userID,
     $core.double? latitude,
     $core.double? longitude,
+    $core.String? town,
   }) {
     final _result = create();
     if (id != null) {
@@ -526,6 +528,9 @@ class MinimalProperty extends $pb.GeneratedMessage {
     }
     if (longitude != null) {
       _result.longitude = longitude;
+    }
+    if (town != null) {
+      _result.town = town;
     }
     return _result;
   }
@@ -698,6 +703,15 @@ class MinimalProperty extends $pb.GeneratedMessage {
   $core.bool hasLongitude() => $_has(16);
   @$pb.TagNumber(17)
   void clearLongitude() => clearField(17);
+
+  @$pb.TagNumber(18)
+  $core.String get town => $_getSZ(17);
+  @$pb.TagNumber(18)
+  set town($core.String v) { $_setString(17, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasTown() => $_has(17);
+  @$pb.TagNumber(18)
+  void clearTown() => clearField(18);
 }
 
 class Photo extends $pb.GeneratedMessage {
@@ -1029,17 +1043,17 @@ class PromotedRequest extends $pb.GeneratedMessage {
 
 class PromotedResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PromotedResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'property.service'), createEmptyInstance: create)
-    ..aOM<SingleMinimalProperty>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'property', subBuilder: SingleMinimalProperty.create)
+    ..pc<SingleMinimalProperty>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'properties', $pb.PbFieldType.PM, subBuilder: SingleMinimalProperty.create)
     ..hasRequiredFields = false
   ;
 
   PromotedResponse._() : super();
   factory PromotedResponse({
-    SingleMinimalProperty? property,
+    $core.Iterable<SingleMinimalProperty>? properties,
   }) {
     final _result = create();
-    if (property != null) {
-      _result.property = property;
+    if (properties != null) {
+      _result.properties.addAll(properties);
     }
     return _result;
   }
@@ -1065,15 +1079,7 @@ class PromotedResponse extends $pb.GeneratedMessage {
   static PromotedResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  SingleMinimalProperty get property => $_getN(0);
-  @$pb.TagNumber(1)
-  set property(SingleMinimalProperty v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasProperty() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearProperty() => clearField(1);
-  @$pb.TagNumber(1)
-  SingleMinimalProperty ensureProperty() => $_ensure(0);
+  $core.List<SingleMinimalProperty> get properties => $_getList(0);
 }
 
 class DeletePropertyRequest extends $pb.GeneratedMessage {
@@ -1359,17 +1365,17 @@ class GetMultiplePropertyRequest extends $pb.GeneratedMessage {
 
 class GetMultiplePropertyResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetMultiplePropertyResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'property.service'), createEmptyInstance: create)
-    ..aOM<SinglePropertyResponse>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'response', subBuilder: SinglePropertyResponse.create)
+    ..pc<SinglePropertyResponse>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'response', $pb.PbFieldType.PM, subBuilder: SinglePropertyResponse.create)
     ..hasRequiredFields = false
   ;
 
   GetMultiplePropertyResponse._() : super();
   factory GetMultiplePropertyResponse({
-    SinglePropertyResponse? response,
+    $core.Iterable<SinglePropertyResponse>? response,
   }) {
     final _result = create();
     if (response != null) {
-      _result.response = response;
+      _result.response.addAll(response);
     }
     return _result;
   }
@@ -1395,15 +1401,7 @@ class GetMultiplePropertyResponse extends $pb.GeneratedMessage {
   static GetMultiplePropertyResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  SinglePropertyResponse get response => $_getN(0);
-  @$pb.TagNumber(1)
-  set response(SinglePropertyResponse v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasResponse() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearResponse() => clearField(1);
-  @$pb.TagNumber(1)
-  SinglePropertyResponse ensureResponse() => $_ensure(0);
+  $core.List<SinglePropertyResponse> get response => $_getList(0);
 }
 
 class CreatePropertyRequest extends $pb.GeneratedMessage {
@@ -1532,17 +1530,17 @@ class GetMinimalPropertiesRequest extends $pb.GeneratedMessage {
 
 class GetMinimalPropertiesResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetMinimalPropertiesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'property.service'), createEmptyInstance: create)
-    ..aOM<SingleMinimalProperty>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleMinimalProperty', protoName: 'singleMinimalProperty', subBuilder: SingleMinimalProperty.create)
+    ..pc<SingleMinimalProperty>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'singleMinimalProperties', $pb.PbFieldType.PM, protoName: 'singleMinimalProperties', subBuilder: SingleMinimalProperty.create)
     ..hasRequiredFields = false
   ;
 
   GetMinimalPropertiesResponse._() : super();
   factory GetMinimalPropertiesResponse({
-    SingleMinimalProperty? singleMinimalProperty,
+    $core.Iterable<SingleMinimalProperty>? singleMinimalProperties,
   }) {
     final _result = create();
-    if (singleMinimalProperty != null) {
-      _result.singleMinimalProperty = singleMinimalProperty;
+    if (singleMinimalProperties != null) {
+      _result.singleMinimalProperties.addAll(singleMinimalProperties);
     }
     return _result;
   }
@@ -1568,15 +1566,7 @@ class GetMinimalPropertiesResponse extends $pb.GeneratedMessage {
   static GetMinimalPropertiesResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  SingleMinimalProperty get singleMinimalProperty => $_getN(0);
-  @$pb.TagNumber(1)
-  set singleMinimalProperty(SingleMinimalProperty v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSingleMinimalProperty() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSingleMinimalProperty() => clearField(1);
-  @$pb.TagNumber(1)
-  SingleMinimalProperty ensureSingleMinimalProperty() => $_ensure(0);
+  $core.List<SingleMinimalProperty> get singleMinimalProperties => $_getList(0);
 }
 
 class SingleMinimalProperty extends $pb.GeneratedMessage {

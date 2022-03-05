@@ -66,11 +66,12 @@ const MinimalProperty$json = const {
     const {'1': 'userID', '3': 15, '4': 1, '5': 9, '10': 'userID'},
     const {'1': 'latitude', '3': 16, '4': 1, '5': 2, '10': 'latitude'},
     const {'1': 'longitude', '3': 17, '4': 1, '5': 2, '10': 'longitude'},
+    const {'1': 'town', '3': 18, '4': 1, '5': 9, '10': 'town'},
   ],
 };
 
 /// Descriptor for `MinimalProperty`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List minimalPropertyDescriptor = $convert.base64Decode('Cg9NaW5pbWFsUHJvcGVydHkSDgoCaWQYASABKAlSAmlkEiYKDnByb3BlcnR5VHlwZUlEGAIgASgFUg5wcm9wZXJ0eVR5cGVJRBIiCgxwcm9wZXJ0eVR5cGUYAyABKAlSDHByb3BlcnR5VHlwZRIuChJwcm9wZXJ0eUNhdGVnb3J5SUQYBCABKAVSEnByb3BlcnR5Q2F0ZWdvcnlJRBIqChBwcm9wZXJ0eUNhdGVnb3J5GAUgASgJUhBwcm9wZXJ0eUNhdGVnb3J5EigKD3Byb3BlcnR5VXNhZ2VJRBgGIAEoBVIPcHJvcGVydHlVc2FnZUlEEiQKDXByb3BlcnR5VXNhZ2UYByABKAlSDXByb3BlcnR5VXNhZ2USGgoIYmVkcm9vbXMYCCABKAVSCGJlZHJvb21zEhQKBXRpdGxlGAkgASgJUgV0aXRsZRIaCghjdXJyZW5jeRgKIAEoCVIIY3VycmVuY3kSFAoFcHJpY2UYCyABKAJSBXByaWNlEhoKCHByb21vdGVkGAwgASgIUghwcm9tb3RlZBI6Cgpwb3N0ZWREYXRlGA0gASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIKcG9zdGVkRGF0ZRIvCgZwaG90b3MYDiADKAsyFy5wcm9wZXJ0eS5zZXJ2aWNlLlBob3RvUgZwaG90b3MSFgoGdXNlcklEGA8gASgJUgZ1c2VySUQSGgoIbGF0aXR1ZGUYECABKAJSCGxhdGl0dWRlEhwKCWxvbmdpdHVkZRgRIAEoAlIJbG9uZ2l0dWRl');
+final $typed_data.Uint8List minimalPropertyDescriptor = $convert.base64Decode('Cg9NaW5pbWFsUHJvcGVydHkSDgoCaWQYASABKAlSAmlkEiYKDnByb3BlcnR5VHlwZUlEGAIgASgFUg5wcm9wZXJ0eVR5cGVJRBIiCgxwcm9wZXJ0eVR5cGUYAyABKAlSDHByb3BlcnR5VHlwZRIuChJwcm9wZXJ0eUNhdGVnb3J5SUQYBCABKAVSEnByb3BlcnR5Q2F0ZWdvcnlJRBIqChBwcm9wZXJ0eUNhdGVnb3J5GAUgASgJUhBwcm9wZXJ0eUNhdGVnb3J5EigKD3Byb3BlcnR5VXNhZ2VJRBgGIAEoBVIPcHJvcGVydHlVc2FnZUlEEiQKDXByb3BlcnR5VXNhZ2UYByABKAlSDXByb3BlcnR5VXNhZ2USGgoIYmVkcm9vbXMYCCABKAVSCGJlZHJvb21zEhQKBXRpdGxlGAkgASgJUgV0aXRsZRIaCghjdXJyZW5jeRgKIAEoCVIIY3VycmVuY3kSFAoFcHJpY2UYCyABKAJSBXByaWNlEhoKCHByb21vdGVkGAwgASgIUghwcm9tb3RlZBI6Cgpwb3N0ZWREYXRlGA0gASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIKcG9zdGVkRGF0ZRIvCgZwaG90b3MYDiADKAsyFy5wcm9wZXJ0eS5zZXJ2aWNlLlBob3RvUgZwaG90b3MSFgoGdXNlcklEGA8gASgJUgZ1c2VySUQSGgoIbGF0aXR1ZGUYECABKAJSCGxhdGl0dWRlEhwKCWxvbmdpdHVkZRgRIAEoAlIJbG9uZ2l0dWRlEhIKBHRvd24YEiABKAlSBHRvd24=');
 @$core.Deprecated('Use photoDescriptor instead')
 const Photo$json = const {
   '1': 'Photo',
@@ -132,12 +133,12 @@ final $typed_data.Uint8List promotedRequestDescriptor = $convert.base64Decode('C
 const PromotedResponse$json = const {
   '1': 'PromotedResponse',
   '2': const [
-    const {'1': 'property', '3': 1, '4': 1, '5': 11, '6': '.property.service.SingleMinimalProperty', '10': 'property'},
+    const {'1': 'properties', '3': 1, '4': 3, '5': 11, '6': '.property.service.SingleMinimalProperty', '10': 'properties'},
   ],
 };
 
 /// Descriptor for `PromotedResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List promotedResponseDescriptor = $convert.base64Decode('ChBQcm9tb3RlZFJlc3BvbnNlEkMKCHByb3BlcnR5GAEgASgLMicucHJvcGVydHkuc2VydmljZS5TaW5nbGVNaW5pbWFsUHJvcGVydHlSCHByb3BlcnR5');
+final $typed_data.Uint8List promotedResponseDescriptor = $convert.base64Decode('ChBQcm9tb3RlZFJlc3BvbnNlEkcKCnByb3BlcnRpZXMYASADKAsyJy5wcm9wZXJ0eS5zZXJ2aWNlLlNpbmdsZU1pbmltYWxQcm9wZXJ0eVIKcHJvcGVydGllcw==');
 @$core.Deprecated('Use deletePropertyRequestDescriptor instead')
 const DeletePropertyRequest$json = const {
   '1': 'DeletePropertyRequest',
@@ -195,12 +196,12 @@ final $typed_data.Uint8List getMultiplePropertyRequestDescriptor = $convert.base
 const GetMultiplePropertyResponse$json = const {
   '1': 'GetMultiplePropertyResponse',
   '2': const [
-    const {'1': 'response', '3': 1, '4': 1, '5': 11, '6': '.property.service.SinglePropertyResponse', '10': 'response'},
+    const {'1': 'response', '3': 1, '4': 3, '5': 11, '6': '.property.service.SinglePropertyResponse', '10': 'response'},
   ],
 };
 
 /// Descriptor for `GetMultiplePropertyResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getMultiplePropertyResponseDescriptor = $convert.base64Decode('ChtHZXRNdWx0aXBsZVByb3BlcnR5UmVzcG9uc2USRAoIcmVzcG9uc2UYASABKAsyKC5wcm9wZXJ0eS5zZXJ2aWNlLlNpbmdsZVByb3BlcnR5UmVzcG9uc2VSCHJlc3BvbnNl');
+final $typed_data.Uint8List getMultiplePropertyResponseDescriptor = $convert.base64Decode('ChtHZXRNdWx0aXBsZVByb3BlcnR5UmVzcG9uc2USRAoIcmVzcG9uc2UYASADKAsyKC5wcm9wZXJ0eS5zZXJ2aWNlLlNpbmdsZVByb3BlcnR5UmVzcG9uc2VSCHJlc3BvbnNl');
 @$core.Deprecated('Use createPropertyRequestDescriptor instead')
 const CreatePropertyRequest$json = const {
   '1': 'CreatePropertyRequest',
@@ -227,12 +228,12 @@ final $typed_data.Uint8List getMinimalPropertiesRequestDescriptor = $convert.bas
 const GetMinimalPropertiesResponse$json = const {
   '1': 'GetMinimalPropertiesResponse',
   '2': const [
-    const {'1': 'singleMinimalProperty', '3': 1, '4': 1, '5': 11, '6': '.property.service.SingleMinimalProperty', '10': 'singleMinimalProperty'},
+    const {'1': 'singleMinimalProperties', '3': 1, '4': 3, '5': 11, '6': '.property.service.SingleMinimalProperty', '10': 'singleMinimalProperties'},
   ],
 };
 
 /// Descriptor for `GetMinimalPropertiesResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getMinimalPropertiesResponseDescriptor = $convert.base64Decode('ChxHZXRNaW5pbWFsUHJvcGVydGllc1Jlc3BvbnNlEl0KFXNpbmdsZU1pbmltYWxQcm9wZXJ0eRgBIAEoCzInLnByb3BlcnR5LnNlcnZpY2UuU2luZ2xlTWluaW1hbFByb3BlcnR5UhVzaW5nbGVNaW5pbWFsUHJvcGVydHk=');
+final $typed_data.Uint8List getMinimalPropertiesResponseDescriptor = $convert.base64Decode('ChxHZXRNaW5pbWFsUHJvcGVydGllc1Jlc3BvbnNlEmEKF3NpbmdsZU1pbmltYWxQcm9wZXJ0aWVzGAEgAygLMicucHJvcGVydHkuc2VydmljZS5TaW5nbGVNaW5pbWFsUHJvcGVydHlSF3NpbmdsZU1pbmltYWxQcm9wZXJ0aWVz');
 @$core.Deprecated('Use singleMinimalPropertyDescriptor instead')
 const SingleMinimalProperty$json = const {
   '1': 'SingleMinimalProperty',

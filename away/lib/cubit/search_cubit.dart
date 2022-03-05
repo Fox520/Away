@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:away/data/repositories/property_repository.dart';
-import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
 import 'package:away/generated/property_service.pb.dart';
 import 'package:bloc/bloc.dart';
@@ -12,43 +11,48 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(SearchInitial());
 
-  StreamController<LocationSearchRequest>? _streamController;
+  // Autocomplete related
+  StreamController<LocationSearchRequest>?
+      _locationSearchRequestStreamController;
   Stream<LocationSearchRequest>? _locationSearchRequestStream;
-  bool _remoteWasAlreadyCalled = false;
+  bool _locationSearchRemoteWasAlreadyCalled = false;
 
   void autocompletePlaces(String? query, String? placeId) async {
     if (_locationSearchRequestStream == null) {
-      _streamController = StreamController<LocationSearchRequest>();
-      _locationSearchRequestStream = _streamController!.stream;
+      _locationSearchRequestStreamController =
+          StreamController<LocationSearchRequest>();
+      _locationSearchRequestStream =
+          _locationSearchRequestStreamController!.stream;
     }
     // If remote was already called, only add to stream; otherwise call
     // then add to stream; avoids creating multiple remote calls
-    if (!_remoteWasAlreadyCalled) {
-      _remoteWasAlreadyCalled = true;
+    if (!_locationSearchRemoteWasAlreadyCalled) {
+      _locationSearchRemoteWasAlreadyCalled = true;
       getIt<PropertyRepository>().performQuery(_locationSearchRequestStream!,
           (LocationDetails a) {
-            // Result tap callback
+        // Result tap callback
         print(a.placeID);
         emit(SearchRequestTapSuccess(a));
       });
     }
     if (query != null && placeId == null) {
       // Autocomplete call
-      _streamController!.add(LocationSearchRequest(
+      _locationSearchRequestStreamController!.add(LocationSearchRequest(
           query: LocationAutocompleteQuery(text: query, countryCode: "na")));
       // emit to cause list rebuild
-      emit(SearchRequest(query));
+      emit(SearchLocationRequest(query));
     } else if (query == null && placeId != null) {
       // Details call
-      _streamController!.add(LocationSearchRequest(
+      _locationSearchRequestStreamController!.add(LocationSearchRequest(
           details: LocationDetailsQuery(placeID: placeId)));
       emit(SearchRequestTapLoading());
     }
   }
 
-  void closeStreams() {
-    _streamController?.close();
+  void closeStreamsa() {
+    // Autocomplete related
+    _locationSearchRequestStreamController?.close();
     _locationSearchRequestStream = null;
-    _remoteWasAlreadyCalled = false;
+    _locationSearchRemoteWasAlreadyCalled = false;
   }
 }

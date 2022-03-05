@@ -78,10 +78,10 @@ class PropertyServiceClient extends $grpc.Client {
       : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseStream<$1.GetMinimalPropertiesResponse>
-      getMinimalInfoProperties($1.GetMinimalPropertiesRequest request,
+      getMinimalInfoProperties(
+          $async.Stream<$1.GetMinimalPropertiesRequest> request,
           {$grpc.CallOptions? options}) {
-    return $createStreamingCall(
-        _$getMinimalInfoProperties, $async.Stream.fromIterable([request]),
+    return $createStreamingCall(_$getMinimalInfoProperties, request,
         options: options);
   }
 
@@ -98,10 +98,9 @@ class PropertyServiceClient extends $grpc.Client {
   }
 
   $grpc.ResponseStream<$1.GetMultiplePropertyResponse> getMultipleProperties(
-      $1.GetMultiplePropertyRequest request,
+      $async.Stream<$1.GetMultiplePropertyRequest> request,
       {$grpc.CallOptions? options}) {
-    return $createStreamingCall(
-        _$getMultipleProperties, $async.Stream.fromIterable([request]),
+    return $createStreamingCall(_$getMultipleProperties, request,
         options: options);
   }
 
@@ -129,10 +128,9 @@ class PropertyServiceClient extends $grpc.Client {
   }
 
   $grpc.ResponseStream<$1.PromotedResponse> getPromotedProperties(
-      $1.PromotedRequest request,
+      $async.Stream<$1.PromotedRequest> request,
       {$grpc.CallOptions? options}) {
-    return $createStreamingCall(
-        _$getPromotedProperties, $async.Stream.fromIterable([request]),
+    return $createStreamingCall(_$getPromotedProperties, request,
         options: options);
   }
 
@@ -150,8 +148,8 @@ abstract class PropertyServiceBase extends $grpc.Service {
     $addMethod($grpc.ServiceMethod<$1.GetMinimalPropertiesRequest,
             $1.GetMinimalPropertiesResponse>(
         'GetMinimalInfoProperties',
-        getMinimalInfoProperties_Pre,
-        false,
+        getMinimalInfoProperties,
+        true,
         true,
         ($core.List<$core.int> value) =>
             $1.GetMinimalPropertiesRequest.fromBuffer(value),
@@ -177,8 +175,8 @@ abstract class PropertyServiceBase extends $grpc.Service {
     $addMethod($grpc.ServiceMethod<$1.GetMultiplePropertyRequest,
             $1.GetMultiplePropertyResponse>(
         'GetMultipleProperties',
-        getMultipleProperties_Pre,
-        false,
+        getMultipleProperties,
+        true,
         true,
         ($core.List<$core.int> value) =>
             $1.GetMultiplePropertyRequest.fromBuffer(value),
@@ -218,8 +216,8 @@ abstract class PropertyServiceBase extends $grpc.Service {
             ($1.FeaturedAreasResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.PromotedRequest, $1.PromotedResponse>(
         'GetPromotedProperties',
-        getPromotedProperties_Pre,
-        false,
+        getPromotedProperties,
+        true,
         true,
         ($core.List<$core.int> value) => $1.PromotedRequest.fromBuffer(value),
         ($1.PromotedResponse value) => value.writeToBuffer()));
@@ -234,12 +232,6 @@ abstract class PropertyServiceBase extends $grpc.Service {
         ($1.LocationSearchResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$1.GetMinimalPropertiesResponse> getMinimalInfoProperties_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$1.GetMinimalPropertiesRequest> request) async* {
-    yield* getMinimalInfoProperties(call, await request);
-  }
-
   $async.Future<$1.SinglePropertyResponse> getSingleProperty_Pre(
       $grpc.ServiceCall call,
       $async.Future<$1.GetSinglePropertyRequest> request) async {
@@ -250,12 +242,6 @@ abstract class PropertyServiceBase extends $grpc.Service {
       $grpc.ServiceCall call,
       $async.Future<$1.GetUserPropertiesRequest> request) async {
     return getUserProperties(call, await request);
-  }
-
-  $async.Stream<$1.GetMultiplePropertyResponse> getMultipleProperties_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$1.GetMultiplePropertyRequest> request) async* {
-    yield* getMultipleProperties(call, await request);
   }
 
   $async.Future<$1.Property> createProperty_Pre($grpc.ServiceCall call,
@@ -280,20 +266,16 @@ abstract class PropertyServiceBase extends $grpc.Service {
     return getFeaturedAreas(call, await request);
   }
 
-  $async.Stream<$1.PromotedResponse> getPromotedProperties_Pre(
-      $grpc.ServiceCall call,
-      $async.Future<$1.PromotedRequest> request) async* {
-    yield* getPromotedProperties(call, await request);
-  }
-
   $async.Stream<$1.GetMinimalPropertiesResponse> getMinimalInfoProperties(
-      $grpc.ServiceCall call, $1.GetMinimalPropertiesRequest request);
+      $grpc.ServiceCall call,
+      $async.Stream<$1.GetMinimalPropertiesRequest> request);
   $async.Future<$1.SinglePropertyResponse> getSingleProperty(
       $grpc.ServiceCall call, $1.GetSinglePropertyRequest request);
   $async.Future<$1.GetUserPropertiesResponse> getUserProperties(
       $grpc.ServiceCall call, $1.GetUserPropertiesRequest request);
   $async.Stream<$1.GetMultiplePropertyResponse> getMultipleProperties(
-      $grpc.ServiceCall call, $1.GetMultiplePropertyRequest request);
+      $grpc.ServiceCall call,
+      $async.Stream<$1.GetMultiplePropertyRequest> request);
   $async.Future<$1.Property> createProperty(
       $grpc.ServiceCall call, $1.CreatePropertyRequest request);
   $async.Future<$1.Property> updateProperty(
@@ -303,7 +285,7 @@ abstract class PropertyServiceBase extends $grpc.Service {
   $async.Future<$1.FeaturedAreasResponse> getFeaturedAreas(
       $grpc.ServiceCall call, $1.FeaturedAreasRequest request);
   $async.Stream<$1.PromotedResponse> getPromotedProperties(
-      $grpc.ServiceCall call, $1.PromotedRequest request);
+      $grpc.ServiceCall call, $async.Stream<$1.PromotedRequest> request);
   $async.Stream<$1.LocationSearchResponse> locationSearch(
       $grpc.ServiceCall call, $async.Stream<$1.LocationSearchRequest> request);
 }

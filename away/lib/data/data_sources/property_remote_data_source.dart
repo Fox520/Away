@@ -1,8 +1,6 @@
 import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
 import 'package:away/generated/property_service.pbgrpc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:grpc/grpc.dart';
 
 class PropertyRemoteDataSource {
@@ -31,7 +29,6 @@ class PropertyRemoteDataSource {
       }
       autocompleteResults.clear();
       autocompleteResults = searchResponse.autocompleteResponse.responses;
-      print("added");
     }
   }
 
@@ -43,5 +40,17 @@ class PropertyRemoteDataSource {
         FeaturedAreasRequest(country: code),
         options: CallOptions(metadata: {"token": token}));
     return response.featuredAreas;
+  }
+
+  void findPromotedProperties(
+      Stream<PromotedRequest> requestStream, Function onResult) async {
+    // retrieve auth token
+    String token = await getIt<UserRepository>().firebaseUser!.getIdToken();
+    var responseStream = client.getPromotedProperties(requestStream,
+        options: CallOptions(metadata: {"token": token}));
+
+    await for (var response in responseStream) {
+      onResult(response.properties);
+    }
   }
 }

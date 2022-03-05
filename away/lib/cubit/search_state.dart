@@ -12,10 +12,10 @@ class SearchInitial extends SearchState {}
 
 class SearchRequestTapLoading extends SearchState {}
 
-class SearchRequest extends SearchState {
+class SearchLocationRequest extends SearchState {
   final String query;
 
-  SearchRequest(this.query) : super(property: query);
+  SearchLocationRequest(this.query) : super(property: query);
 }
 
 class SearchRequestTapSuccess extends SearchState {

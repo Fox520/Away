@@ -3,6 +3,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:away/config/constants.dart';
 import 'package:away/config/size_config.dart';
 import 'package:away/cubit/featured_cubit.dart';
+import 'package:away/cubit/promoted_properties_cubit.dart';
+import 'package:away/data/models/general_location_info.dart';
 import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
 import 'package:away/generated/property_service.pb.dart';
@@ -19,15 +21,19 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  List<SingleMinimalProperty> promotedProperties = [];
+  GeneralLocationInfo? userLocation;
+
   @override
   void initState() {
     super.initState();
     // Ensure screen is initialised
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      final location =
-          await getIt<UserRepository>().getGeneralUserLocationInfo();
+      userLocation = await getIt<UserRepository>().getGeneralUserLocationInfo();
       BlocProvider.of<FeaturedCubit>(context)
-          .getFeaturedAreas(location.countryCode);
+          .getFeaturedAreas(userLocation!.countryCode);
+      BlocProvider.of<PromotedPropertiesCubit>(context)
+          .findPromotedProperties(userLocation!.lat, userLocation!.lon);
     });
   }
 
@@ -168,32 +174,51 @@ class _HomePageViewState extends State<HomePageView> {
           ),
         ),
         SliverToBoxAdapter(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              scrollPhysics: BouncingScrollPhysics(),
-              height: 32 * SizeConfig.heightMultiplier,
-              enlargeCenterPage: false,
-              enableInfiniteScroll: false,
-              autoPlayAnimationDuration: Duration(seconds: 2),
-              autoPlayInterval: Duration(seconds: 8),
-              autoPlay: true,
-            ),
-            items: [
-              "https://images.prop24.com/267180470",
-              "https://media.cntraveler.com/photos/5ea354e75e5dc70008d054b9/16:9/w_2560%2Cc_limit/24912891-australia-3.jpg",
-              "https://static.trip101.com/main_pics/261395/medium.jpg",
-              "https://floridatrippers.com/wp-content/uploads/2020/07/airbnb-in-florida-sanctuary-of-light-1600x900.jpg",
-              "https://images.prop24.com/267180470",
-            ].map((place) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    margin: EdgeInsets.only(right: kDefaultPaddingSize),
-                    child: SmallPropertyPost(place),
-                  );
-                },
+          child: BlocConsumer<PromotedPropertiesCubit, PromotedPropertiesState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is PromotedPropertiesSearchResult) {
+                // If no more properties come back, keep showing what has
+                // already been retrieved
+                if (state is PromotedPropertiesSearchResult &&
+                    promotedProperties.length == 0 &&
+                    state.props.length > 0) {
+                  promotedProperties = state.props;
+                }
+                return CarouselSlider(
+                  options: CarouselOptions(
+                    scrollPhysics: BouncingScrollPhysics(),
+                    height: 32 * SizeConfig.heightMultiplier,
+                    enlargeCenterPage: false,
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(seconds: 2),
+                    autoPlayInterval: Duration(seconds: 8),
+                    autoPlay: true,
+                    onPageChanged: (index, reason) {
+                      // Increase range
+                      BlocProvider.of<PromotedPropertiesCubit>(context)
+                          .findPromotedProperties(
+                              userLocation!.lat, userLocation!.lon);
+                    },
+                  ),
+                  items: promotedProperties.map((place) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          margin: EdgeInsets.only(right: kDefaultPaddingSize),
+                          child: SmallPropertyPost(place),
+                        );
+                      },
+                    );
+                  }).toList(),
+                );
+              }
+              return Container(
+                height: 32 * SizeConfig.heightMultiplier,
+                width: 32 * SizeConfig.heightMultiplier,
+                child: Center(child: CircularProgressIndicator()),
               );
-            }).toList(),
+            },
           ),
         ),
         SliverToBoxAdapter(
@@ -250,7 +275,7 @@ class FeaturedItem extends StatelessWidget {
 }
 
 class SmallPropertyPost extends StatelessWidget {
-  final String place;
+  final SingleMinimalProperty place;
   SmallPropertyPost(this.place);
 
   @override
@@ -269,7 +294,7 @@ class SmallPropertyPost extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: CachedNetworkImage(
-                  imageUrl: place,
+                  imageUrl: place.property.photos[0].url,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -284,48 +309,13 @@ class SmallPropertyPost extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Text(
-                    "📍 Oshakati ",
+                    "📍 ${place.property.town} ",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.subtitle2!.copyWith(
                           color: darkModeOn ? Colors.white : Colors.grey[700],
                         ),
                   ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(kMediumWidth),
-                      margin: EdgeInsets.only(right: kSmallWidth),
-                      decoration: BoxDecoration(
-                        color: darkModeOn
-                            ? CupertinoColors.darkBackgroundGray
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        Icons.pets,
-                        color: darkModeOn ? Colors.white : Colors.black,
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(kMediumWidth),
-                      decoration: BoxDecoration(
-                        color: darkModeOn
-                            ? CupertinoColors.darkBackgroundGray
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        Icons.wifi,
-                        color: darkModeOn ? Colors.white : Colors.black,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ],
@@ -343,7 +333,7 @@ class SmallPropertyPost extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "2 Bedroom Flat",
+                        "${place.property.bedrooms} Bedroom ${place.property.propertyCategory}",
                         style: CupertinoTheme.of(context)
                             .textTheme
                             .textStyle
@@ -356,7 +346,7 @@ class SmallPropertyPost extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "N\$ 2500",
+                    "${place.property.currency} ${place.property.price}",
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF00A727),
@@ -366,7 +356,7 @@ class SmallPropertyPost extends StatelessWidget {
                 ],
               ),
               AutoSizeText(
-                "A perfect get away apartment for touasjvdh asjdv as",
+                "${place.property.title}",
                 style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: darkModeOn ? Colors.white : Colors.black87,
                     ),

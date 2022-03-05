@@ -1,5 +1,6 @@
 import 'package:away/cubit/auth_cubit.dart';
 import 'package:away/cubit/featured_cubit.dart';
+import 'package:away/cubit/promoted_properties_cubit.dart';
 import 'package:away/cubit/search_cubit.dart';
 import 'package:away/presentation/pages/home/home_page.dart';
 import 'package:away/presentation/pages/login/login_page.dart';
@@ -32,8 +33,15 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return BlocProvider(
-              create: (context) => FeaturedCubit(),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => FeaturedCubit(),
+                ),
+                BlocProvider(
+                  create: (context) => PromotedPropertiesCubit(),
+                ),
+              ],
               child: HomePage(),
             );
           },
