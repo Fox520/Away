@@ -143,34 +143,45 @@ class _HomePageViewState extends State<HomePageView> {
           ),
         ),
         SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: kMediumHeight * 3),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: BlocBuilder<PromotedPropertiesCubit, PromotedPropertiesState>(
+            builder: (context, state) {
+              if (state is PromotedPropertiesSearchResult &&
+                  promotedProperties.length == 0) {
+                return SizedBox();
+              }
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPaddingSize),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Promoted",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5!
-                          .copyWith(letterSpacing: 0.41),
+                    SizedBox(height: kMediumHeight * 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Promoted",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(letterSpacing: 0.41),
+                        ),
+                        Text(
+                          "See all",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(
+                                  letterSpacing: 0.41,
+                                  color: CupertinoColors.activeBlue,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "See all",
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          letterSpacing: 0.41,
-                          color: CupertinoColors.activeBlue,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(height: kMediumHeight * 3),
                   ],
                 ),
-                SizedBox(height: kMediumHeight * 3),
-              ],
-            ),
+              );
+            },
           ),
         ),
         SliverToBoxAdapter(
@@ -223,6 +234,23 @@ class _HomePageViewState extends State<HomePageView> {
         ),
         SliverToBoxAdapter(
           child: SizedBox(height: kMediumHeight * 3),
+        ),
+        SliverToBoxAdapter(
+          child: BlocBuilder<PromotedPropertiesCubit, PromotedPropertiesState>(
+            builder: (context, state) {
+              if (state is PromotedPropertiesSearchResult &&
+                  promotedProperties.length == 0) {
+                return Column(
+                  children: [
+                    // Lottie.network(
+                    //     'assets/animations/advertising-promotion.json'),
+                    Text("promote your post"),
+                  ],
+                );
+              }
+              return SizedBox();
+            },
+          ),
         )
       ],
     );

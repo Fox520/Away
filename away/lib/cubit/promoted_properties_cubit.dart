@@ -42,12 +42,12 @@ class PromotedPropertiesCubit extends Cubit<PromotedPropertiesState> {
 
         // Try retrieving at least 5 properties in 10 attempts
         if (totalFound < 5 && attempts < 10) {
-          print("total found: $totalFound");
+          // print("total found: $totalFound");
           attempts += 1;
-          print("attempts $attempts");
+          // print("attempts $attempts");
           // Increase search radius
           promotedPropertySearchRadius = promotedPropertySearchRadius * 2.5;
-          print(promotedPropertySearchRadius);
+          // print(promotedPropertySearchRadius);
           Future.delayed(Duration(seconds: 1), () {
             _promotedRequestStreamController!.add(PromotedRequest(
                 latitude: latitude,

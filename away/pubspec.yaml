@@ -42,6 +42,7 @@ dependencies:
   equatable: ^2.0.3
   firebase_messaging: ^10.0.4
   material_floating_search_bar: ^0.3.4
+  # lottie: ^1.2.2 Error: Type 'AssetBundle' not found.
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/animations/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
