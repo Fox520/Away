@@ -47,6 +47,24 @@ class UserRemoteDataSource {
     }
   }
 
+  Stream<AwayUser> streamAwayUser() async* {
+    final token = await firebaseUser!.getIdToken();
+
+    try {
+      final responses = client.streamUserInfo(StreamUserInfoRequest(),
+          options: CallOptions(metadata: {"token": token}));
+
+      await for (var x in responses) {
+        // Load the profile
+        getIt.unregister<AwayUser>();
+        getIt.registerSingleton<AwayUser>(x.user);
+        yield x.user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<Either<Failure, AwayUser>> createUser(
     String username,
     String bio,

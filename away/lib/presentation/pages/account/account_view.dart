@@ -1,4 +1,5 @@
 import 'package:away/config/constants.dart';
+import 'package:away/data/repositories/user_repository.dart';
 import 'package:away/di/locator.dart';
 import 'package:away/generated/user_service.pb.dart';
 import 'package:away/presentation/shared_widgets/dynamic_header.dart';
@@ -6,64 +7,78 @@ import 'package:flutter/material.dart';
 
 class AccountView extends StatelessWidget {
   // Switch to stream later on
-  final loggedInUser = getIt<AwayUser>();
 
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
     bool darkModeOn = brightness == Brightness.dark;
-    return CustomScrollView(
-      physics: BouncingScrollPhysics(),
-      slivers: <Widget>[
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: MyDynamicHeader(awayUser: loggedInUser),
-        ),
-        SliverToBoxAdapter(
-          child: Container(
-            margin: EdgeInsets.only(
-                left: kDefaultPaddingSize,
-                right: kDefaultPaddingSize,
-                bottom: kDefaultPaddingSize),
-            padding: EdgeInsets.symmetric(
-                horizontal: kDefaultPaddingSize, vertical: kMediumHeight),
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: darkModeOn
-                  ? Colors.black38.withOpacity(0.5)
-                  : Colors.grey.shade200.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "About Me",
-                  style: Theme.of(context).textTheme.headline6,
-                  textAlign: TextAlign.center,
+    return StreamBuilder(
+        stream: getIt<UserRepository>().streamAwayUser(),
+        builder: (BuildContext context, AsyncSnapshot<AwayUser> snapshot) {
+          if (snapshot.connectionState != ConnectionState.active) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return CircularProgressIndicator(
+              color: Colors.red,
+            );
+          }
+          final loggedInUser = snapshot.data!;
+          return CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: <Widget>[
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: MyDynamicHeader(awayUser: loggedInUser),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: EdgeInsets.only(
+                      left: kDefaultPaddingSize,
+                      right: kDefaultPaddingSize,
+                      bottom: kDefaultPaddingSize),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: kDefaultPaddingSize, vertical: kMediumHeight),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: darkModeOn
+                        ? Colors.black38.withOpacity(0.5)
+                        : Colors.grey.shade200.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "About Me",
+                        style: Theme.of(context).textTheme.headline6,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        loggedInUser.bio,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  loggedInUser.bio,
-                  textAlign: TextAlign.center,
+              ),
+              SliverFixedExtentList(
+                itemExtent: 80.0,
+                delegate: SliverChildListDelegate(
+                  [
+                    AccountViewEntry(iconData: Icons.person, title: "Account"),
+                    AccountViewEntry(
+                        iconData: Icons.home, title: "My Properties"),
+                    AccountViewEntry(
+                        iconData: Icons.ac_unit, title: "Interesting Option"),
+                    AccountViewEntry(
+                        iconData: Icons.settings, title: "Settings"),
+                    AccountViewEntry(iconData: Icons.help, title: "FAQ"),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ),
-        SliverFixedExtentList(
-          itemExtent: 80.0,
-          delegate: SliverChildListDelegate(
-            [
-              AccountViewEntry(iconData: Icons.person, title: "Account"),
-              AccountViewEntry(iconData: Icons.home, title: "My Properties"),
-              AccountViewEntry(
-                  iconData: Icons.ac_unit, title: "Interesting Option"),
-              AccountViewEntry(iconData: Icons.settings, title: "Settings"),
-              AccountViewEntry(iconData: Icons.help, title: "FAQ"),
+              ),
             ],
-          ),
-        ),
-      ],
-    );
+          );
+        });
   }
 }
 

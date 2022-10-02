@@ -3,7 +3,7 @@
 //  source: user_service.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -105,11 +105,12 @@ const AwayUser$json = const {
     const {'1': 'subscriptionStatus', '3': 7, '4': 1, '5': 9, '10': 'subscriptionStatus'},
     const {'1': 'createdAt', '3': 8, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
     const {'1': 'profilePictureUrl', '3': 9, '4': 1, '5': 9, '10': 'profilePictureUrl'},
+    const {'1': 'subscriptionStatusDescription', '3': 10, '4': 1, '5': 9, '10': 'subscriptionStatusDescription'},
   ],
 };
 
 /// Descriptor for `AwayUser`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List awayUserDescriptor = $convert.base64Decode('CghBd2F5VXNlchIOCgJpZBgBIAEoCVICaWQSGgoIdXNlck5hbWUYAiABKAlSCHVzZXJOYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBIQCgNiaW8YBCABKAlSA2JpbxIgCgtkZXZpY2VUb2tlbhgFIAEoCVILZGV2aWNlVG9rZW4SGgoIdmVyaWZpZWQYBiABKAhSCHZlcmlmaWVkEi4KEnN1YnNjcmlwdGlvblN0YXR1cxgHIAEoCVISc3Vic2NyaXB0aW9uU3RhdHVzEjgKCWNyZWF0ZWRBdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCWNyZWF0ZWRBdBIsChFwcm9maWxlUGljdHVyZVVybBgJIAEoCVIRcHJvZmlsZVBpY3R1cmVVcmw=');
+final $typed_data.Uint8List awayUserDescriptor = $convert.base64Decode('CghBd2F5VXNlchIOCgJpZBgBIAEoCVICaWQSGgoIdXNlck5hbWUYAiABKAlSCHVzZXJOYW1lEhQKBWVtYWlsGAMgASgJUgVlbWFpbBIQCgNiaW8YBCABKAlSA2JpbxIgCgtkZXZpY2VUb2tlbhgFIAEoCVILZGV2aWNlVG9rZW4SGgoIdmVyaWZpZWQYBiABKAhSCHZlcmlmaWVkEi4KEnN1YnNjcmlwdGlvblN0YXR1cxgHIAEoCVISc3Vic2NyaXB0aW9uU3RhdHVzEjgKCWNyZWF0ZWRBdBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCWNyZWF0ZWRBdBIsChFwcm9maWxlUGljdHVyZVVybBgJIAEoCVIRcHJvZmlsZVBpY3R1cmVVcmwSRAodc3Vic2NyaXB0aW9uU3RhdHVzRGVzY3JpcHRpb24YCiABKAlSHXN1YnNjcmlwdGlvblN0YXR1c0Rlc2NyaXB0aW9u');
 @$core.Deprecated('Use minimalUserInfoDescriptor instead')
 const MinimalUserInfo$json = const {
   '1': 'MinimalUserInfo',
@@ -125,3 +126,20 @@ const MinimalUserInfo$json = const {
 
 /// Descriptor for `MinimalUserInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List minimalUserInfoDescriptor = $convert.base64Decode('Cg9NaW5pbWFsVXNlckluZm8SDgoCaWQYASABKAlSAmlkEhoKCHVzZXJOYW1lGAIgASgJUgh1c2VyTmFtZRIQCgNiaW8YAyABKAlSA2JpbxIaCgh2ZXJpZmllZBgEIAEoCFIIdmVyaWZpZWQSOAoJY3JlYXRlZEF0GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0EiwKEXByb2ZpbGVQaWN0dXJlVXJsGAYgASgJUhFwcm9maWxlUGljdHVyZVVybA==');
+@$core.Deprecated('Use streamUserInfoRequestDescriptor instead')
+const StreamUserInfoRequest$json = const {
+  '1': 'StreamUserInfoRequest',
+};
+
+/// Descriptor for `StreamUserInfoRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamUserInfoRequestDescriptor = $convert.base64Decode('ChVTdHJlYW1Vc2VySW5mb1JlcXVlc3Q=');
+@$core.Deprecated('Use streamUserInfoResponseDescriptor instead')
+const StreamUserInfoResponse$json = const {
+  '1': 'StreamUserInfoResponse',
+  '2': const [
+    const {'1': 'user', '3': 1, '4': 1, '5': 11, '6': '.user.service.AwayUser', '10': 'user'},
+  ],
+};
+
+/// Descriptor for `StreamUserInfoResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamUserInfoResponseDescriptor = $convert.base64Decode('ChZTdHJlYW1Vc2VySW5mb1Jlc3BvbnNlEioKBHVzZXIYASABKAsyFi51c2VyLnNlcnZpY2UuQXdheVVzZXJSBHVzZXI=');

@@ -24,8 +24,6 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
         height: constraints.maxHeight,
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            border: Border.all(
-                color: percentage < 0.5 ? Colors.grey : Colors.transparent),
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15))),

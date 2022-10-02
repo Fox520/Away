@@ -20,86 +20,103 @@ class LoginPage extends StatelessWidget {
         children: [
           Stack(
             children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                  scrollPhysics: BouncingScrollPhysics(),
-                  height: screenHeight * 0.65,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: true,
-                  viewportFraction: 1,
-                  autoPlayAnimationDuration: Duration(seconds: 2),
-                  autoPlayInterval: Duration(seconds: 8),
-                  autoPlay: true,
-                ),
-                items: ["clock.jpg", "shelf.jpg", "window.jpg"].map((src) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                    child: Image.asset(
-                      "assets/images/$src",
-                      width: screenWidth,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                }).toList(),
+              Image.asset(
+                "assets/images/window.jpg",
+                width: screenWidth,
+                height: screenHeight,
+                fit: BoxFit.fill,
               ),
               Positioned(
-                bottom: 0,
+                top: 250,
                 child: Container(
                   width: screenWidth,
-                  color: Colors.black38.withOpacity(0.5),
+                  // color: Colors.black38.withOpacity(0.5),
                   child: Column(
                     children: [
-                      Text("away",
-                          style: GoogleFonts.pacifico(
-                              fontSize: 63, color: Colors.white)),
-                      SizedBox(height: 5),
-                      Text(
-                        "your home away from home",
-                        style: GoogleFonts.pacifico(
-                            fontSize: 20, color: Colors.white),
+                      Stack(
+                        children: <Widget>[
+                          // Stroked text as border.
+                          Text("away",
+                              style: GoogleFonts.pacifico(
+                                  fontSize: 63,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 6
+                                    ..color = Colors.black)),
+                          Text(
+                            'away',
+                            style: GoogleFonts.pacifico(
+                              fontSize: 63,
+                              foreground: Paint()
+                                ..strokeWidth = 6
+                                ..color = Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 3),
+                      Stack(
+                        children: [
+                          Text("your home away from home",
+                              style: GoogleFonts.pacifico(
+                                  fontSize: 20,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 6
+                                    ..color = Colors.black)),
+                          Text(
+                            'your home away from home',
+                            style: GoogleFonts.pacifico(
+                              fontSize: 20,
+                              foreground: Paint()
+                                ..strokeWidth = 6
+                                ..color = Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 150),
+                      BlocConsumer<AuthCubit, AuthState>(
+                        listener: (context, state) {
+                          if (state is AuthFailed) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(state.reason)));
+                          }
+
+                          if (state is AuthSuccess) {
+                            // Go to home
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            // SnackBar(content: Text("logged in, profile loaded")));
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                HomePage.routeName,
+                                (Route<dynamic> route) => false);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is AuthLoading) {
+                            // Show loading indicator
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return LoginButton(
+                            iconPath: "assets/images/google_logo.png",
+                            text: "Continue with Google",
+                            callback: () {
+                              // test delete
+                              // getIt<UserRepository>().delete();
+                              // Call business logic
+                              BlocProvider.of<AuthCubit>(context)
+                                  .googleSignIn();
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
             ],
-          ),
-          SizedBox(height: 50),
-          BlocConsumer<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state is AuthFailed) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(state.reason)));
-              }
-
-              if (state is AuthSuccess) {
-                // Go to home
-                // ScaffoldMessenger.of(context).showSnackBar(
-                // SnackBar(content: Text("logged in, profile loaded")));
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    HomePage.routeName, (Route<dynamic> route) => false);
-              }
-            },
-            builder: (context, state) {
-              if (state is AuthLoading) {
-                // Show loading indicator
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return LoginButton(
-                iconPath: "assets/images/google_logo.png",
-                text: "Continue with Google",
-                callback: () {
-                  // test delete
-                  // getIt<UserRepository>().delete();
-                  // Call business logic
-                  BlocProvider.of<AuthCubit>(context).googleSignIn();
-                },
-              );
-            },
           ),
         ],
       ),
@@ -125,6 +142,8 @@ class LoginButton extends StatelessWidget {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
             darkModeOn ? Color(0xFF2E2E2E) : Colors.white),
+        side: MaterialStateProperty.all(
+            BorderSide(width: 2.0, color: Colors.grey)),
         padding:
             MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(15)),
       ),

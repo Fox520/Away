@@ -3,7 +3,7 @@
 //  source: user_service.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -479,6 +479,7 @@ class AwayUser extends $pb.GeneratedMessage {
     ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subscriptionStatus', protoName: 'subscriptionStatus')
     ..aOM<$1.Timestamp>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $1.Timestamp.create)
     ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profilePictureUrl', protoName: 'profilePictureUrl')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subscriptionStatusDescription', protoName: 'subscriptionStatusDescription')
     ..hasRequiredFields = false
   ;
 
@@ -493,6 +494,7 @@ class AwayUser extends $pb.GeneratedMessage {
     $core.String? subscriptionStatus,
     $1.Timestamp? createdAt,
     $core.String? profilePictureUrl,
+    $core.String? subscriptionStatusDescription,
   }) {
     final _result = create();
     if (id != null) {
@@ -521,6 +523,9 @@ class AwayUser extends $pb.GeneratedMessage {
     }
     if (profilePictureUrl != null) {
       _result.profilePictureUrl = profilePictureUrl;
+    }
+    if (subscriptionStatusDescription != null) {
+      _result.subscriptionStatusDescription = subscriptionStatusDescription;
     }
     return _result;
   }
@@ -627,6 +632,15 @@ class AwayUser extends $pb.GeneratedMessage {
   $core.bool hasProfilePictureUrl() => $_has(8);
   @$pb.TagNumber(9)
   void clearProfilePictureUrl() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get subscriptionStatusDescription => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set subscriptionStatusDescription($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasSubscriptionStatusDescription() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearSubscriptionStatusDescription() => clearField(10);
 }
 
 class MinimalUserInfo extends $pb.GeneratedMessage {
@@ -746,5 +760,83 @@ class MinimalUserInfo extends $pb.GeneratedMessage {
   $core.bool hasProfilePictureUrl() => $_has(5);
   @$pb.TagNumber(6)
   void clearProfilePictureUrl() => clearField(6);
+}
+
+class StreamUserInfoRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StreamUserInfoRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'user.service'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  StreamUserInfoRequest._() : super();
+  factory StreamUserInfoRequest() => create();
+  factory StreamUserInfoRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StreamUserInfoRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StreamUserInfoRequest clone() => StreamUserInfoRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StreamUserInfoRequest copyWith(void Function(StreamUserInfoRequest) updates) => super.copyWith((message) => updates(message as StreamUserInfoRequest)) as StreamUserInfoRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StreamUserInfoRequest create() => StreamUserInfoRequest._();
+  StreamUserInfoRequest createEmptyInstance() => create();
+  static $pb.PbList<StreamUserInfoRequest> createRepeated() => $pb.PbList<StreamUserInfoRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StreamUserInfoRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamUserInfoRequest>(create);
+  static StreamUserInfoRequest? _defaultInstance;
+}
+
+class StreamUserInfoResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StreamUserInfoResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'user.service'), createEmptyInstance: create)
+    ..aOM<AwayUser>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: AwayUser.create)
+    ..hasRequiredFields = false
+  ;
+
+  StreamUserInfoResponse._() : super();
+  factory StreamUserInfoResponse({
+    AwayUser? user,
+  }) {
+    final _result = create();
+    if (user != null) {
+      _result.user = user;
+    }
+    return _result;
+  }
+  factory StreamUserInfoResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StreamUserInfoResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StreamUserInfoResponse clone() => StreamUserInfoResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StreamUserInfoResponse copyWith(void Function(StreamUserInfoResponse) updates) => super.copyWith((message) => updates(message as StreamUserInfoResponse)) as StreamUserInfoResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StreamUserInfoResponse create() => StreamUserInfoResponse._();
+  StreamUserInfoResponse createEmptyInstance() => create();
+  static $pb.PbList<StreamUserInfoResponse> createRepeated() => $pb.PbList<StreamUserInfoResponse>();
+  @$core.pragma('dart2js:noInline')
+  static StreamUserInfoResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamUserInfoResponse>(create);
+  static StreamUserInfoResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  AwayUser get user => $_getN(0);
+  @$pb.TagNumber(1)
+  set user(AwayUser v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUser() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUser() => clearField(1);
+  @$pb.TagNumber(1)
+  AwayUser ensureUser() => $_ensure(0);
 }
 

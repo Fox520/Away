@@ -15,7 +15,7 @@ final getIt = GetIt.instance;
 void setupLocator() {
   getIt.registerLazySingleton<UserRepository>(() {
     final channel = ClientChannel(
-      "10.0.2.2", // server address
+      "192.168.0.141", // server address
       port: 9000,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
@@ -26,7 +26,7 @@ void setupLocator() {
 
   getIt.registerLazySingleton<PropertyRepository>(() {
     final channel = ClientChannel(
-      "10.0.2.2", // server address
+      "192.168.0.141", // server address
       port: 9001,
       options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );

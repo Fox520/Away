@@ -33,4 +33,8 @@ class UserRepository {
   Future<GeneralLocationInfo> getGeneralUserLocationInfo() {
     return remoteDataSource.getGeneralUserLocationInfo();
   }
+
+  Stream<AwayUser> streamAwayUser() {
+    return remoteDataSource.streamAwayUser();
+  }
 }
